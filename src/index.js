@@ -1,7 +1,7 @@
 /* eslint-disable semi */
 'use strict';
 
-const request = require('request');
+import request from 'request';
 
 const requestOptions = {
   url: 'https://graph.facebook.com/v2.6/',
@@ -124,7 +124,7 @@ const sendDisplayMessage = function sendDisplayMessage (id, payload, token, cb) 
   return sendMessage(options, token, cb);
 };
 
-class FbMessengerAPI {
+export class Client {
   constructor (token) {
     this._token = token;
   }
@@ -174,5 +174,3 @@ class FbMessengerAPI {
     return sendDisplayMessage(id, jsonPayload, this._token, cb)
   }
 }
-
-module.exports = FbMessengerAPI;

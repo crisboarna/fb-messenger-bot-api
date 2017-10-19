@@ -1,12 +1,12 @@
 /* eslint-disable semi */
 'use strict';
 
-const expect = require('chai').expect;
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
+import { expect } from 'chai';
+import sinon from 'sinon';
+import proxyquire from 'proxyquire';
 
 const requestSpy = sinon.spy();
-const MessengerClient = proxyquire('./index', {'request': requestSpy});
+const facebook = proxyquire('./index', {'request': requestSpy});
 
 describe('MessengerClient', () => {
   let client;
@@ -29,7 +29,7 @@ describe('MessengerClient', () => {
 
   beforeEach(() => {
     requestSpy.reset();
-    client = new MessengerClient(TEST_TOKEN);
+    client = new facebook.Client(TEST_TOKEN);
   });
 
   describe('setGreetingMessage', () => {
