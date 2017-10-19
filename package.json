@@ -1,6 +1,6 @@
 {
   "name": "fb-messenger-bot-api",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
   "main": "src/index.js",
   "config": {
