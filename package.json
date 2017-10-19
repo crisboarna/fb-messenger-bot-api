@@ -3,9 +3,15 @@
   "version": "0.0.0-development",
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
   "main": "src/index.js",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "scripts": {
     "commit": "git-cz",
-    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w",
+    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
+    "test-watch": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w",
     "coverage": "nyc --reporter=html --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
@@ -39,8 +45,5 @@
   },
   "dependencies": {
     "request": "2.83.0"
-  },
-  "czConfig": {
-    "path": "node_modules/cz-conventional-changelog"
   }
 }
