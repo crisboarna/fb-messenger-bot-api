@@ -1,6 +1,6 @@
 {
-  "name": "fb-messenger-api",
-  "version": "0.0.0-development",
+  "name": "fb-messenger-bot-api",
+  "version": "0.1.0",
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
   "main": "src/index.js",
   "config": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/crisboarna/fb-messenger-api.git"
+    "url": "https://github.com/crisboarna/fb-messenger-bot-api.git"
   },
   "keywords": [
     "Facebook",
@@ -34,9 +34,9 @@
   "author": "Cristian Boarna <cristian.boarna@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/crisboarna/fb-messenger-api/issues"
+    "url": "https://github.com/crisboarna/fb-messenger-bot-api/issues"
   },
-  "homepage": "https://github.com/crisboarna/fb-messenger-api#readme",
+  "homepage": "https://github.com/crisboarna/fb-messenger-bot-api#readme",
   "devDependencies": {
     "chai": "4.1.2",
     "codecov.io": "0.1.6",
