@@ -39,6 +39,10 @@ const persistentMenuSettingPayload = {
   ]
 };
 
+const textMessagePayload = {
+  text: undefined
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -90,6 +94,15 @@ const sendPersistentMenuMessage = function sendPersistentMenuMessage (payload, t
   return sendMessage(options, token, cb);
 };
 
+const sendDisplayMessage = function sendDisplayMessage (id, payload, token, cb) {
+  const options = deepCopyPayload(requestOptions);
+  options.url += 'me/messages';
+  options.method = 'POST';
+  options.json = {recipient: {id: id}};
+  options.json.message = payload;
+  return sendMessage(options, token, cb);
+};
+
 class FbMessengerAPI {
   constructor (token) {
     this._token = token;
@@ -119,6 +132,12 @@ class FbMessengerAPI {
     options.qs.fields = fieldsArray.join(',');
     options.method = 'GET';
     return sendMessage(options, this._token, cb);
+  }
+
+  sendTextMessage (id, text, cb) {
+    const jsonPayload = deepCopyPayload(textMessagePayload);
+    jsonPayload.text = text;
+    return sendDisplayMessage(id, jsonPayload, this._token, cb);
   }
 }
 

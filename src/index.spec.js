@@ -154,4 +154,39 @@ describe('MessengerClient', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
   });
+
+  describe('sendTextMessage', () => {
+    const correctPayload = {
+      json: {
+        message: {
+          text: TEST_TEXT
+        },
+        recipient: {
+          id: TEST_ID
+        }
+      },
+      method: 'POST',
+      qs: {
+        access_token: TEST_TOKEN
+      },
+      url: 'https://graph.facebook.com/v2.6/me/messages'
+    };
+
+    it('returns a promise and creates correct request payload', () => {
+      const result = client.sendTextMessage(TEST_ID, TEST_TEXT);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload)
+    });
+
+    it('given cb no promise returned and proper request payload generated', () => {
+      const result = client.sendTextMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
+
+      expect(result).to.equal(undefined);
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload)
+    });
+  });
 });
