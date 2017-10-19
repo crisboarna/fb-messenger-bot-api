@@ -17,6 +17,10 @@ const greetingSettingPayload = {
     }
 };
 
+const deepCopyPayload = function deepCopyPayload(payloadType) {
+    return JSON.parse(JSON.stringify(payloadType));
+};
+
 const sendMessage = function sendMessage(options, token, cb) {
     options.qs.access_token = token;
 
@@ -54,10 +58,6 @@ const sendConfigurationMessage = function sendConfigurationMessage(payload, toke
     options.method = 'POST';
     options.json = payload;
     return sendMessage(options, token, cb);
-};
-
-const deepCopyPayload = function deepCopyPayload(payloadType) {
-    return JSON.parse(JSON.stringify(payloadType));
 };
 
 class FbMessengerAPI {
