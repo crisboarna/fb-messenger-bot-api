@@ -8,7 +8,7 @@
 [![MIT License](https://img.shields.io/npm/l/fb-messenger-bot-api.svg)](http://opensource.org/licenses/MIT)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
-[![stability](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
+![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)
 [![Greenkeeper](https://badges.greenkeeper.io/crisboarna/fb-messenger-bot-api.svg)](https://greenkeeper.io/)
 
 ## Installation
