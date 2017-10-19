@@ -13,8 +13,19 @@ describe('MessengerClient', () => {
   const TEST_ID = 0;
   const TEST_TOKEN = 'TEST_TOKEN';
   const TEST_TEXT = 'TEST_TEXT';
-  const TEST_CALLBACK = () => {
-  };
+  const TEST_CALLBACK = () => {};
+  const TEST_BUTTONS = [
+    {
+      'type': 'postback',
+      'payload': TEST_TEXT,
+      'title': TEST_TEXT
+    },
+    {
+      'type': 'postback',
+      'payload': TEST_TEXT,
+      'title': TEST_TEXT
+    }
+  ];
 
   beforeEach(() => {
     requestSpy.reset();
@@ -224,6 +235,48 @@ describe('MessengerClient', () => {
 
     it('given cb no promise returned and correct payload generated', () => {
       const result = client.sendImageMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
+
+      expect(result).to.equal(undefined);
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
+
+  describe('sendButtonsMessage', () => {
+    const correctPayload = {
+      json: {
+        message: {
+          attachment: {
+            payload: {
+              buttons: TEST_BUTTONS,
+              template_type: 'button',
+              text: TEST_TEXT
+            },
+            type: 'template'
+          }
+        },
+        recipient: {
+          id: TEST_ID
+        }
+      },
+      method: 'POST',
+      qs: {
+        access_token: TEST_TOKEN
+      },
+      url: 'https://graph.facebook.com/v2.6/me/messages'
+    };
+
+    it('returns a promise and generates correct request payload given no cb', () => {
+      const result = client.sendButtonsMessage(TEST_ID, TEST_TEXT, TEST_BUTTONS);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.sendButtonsMessage(TEST_ID, TEST_TEXT, TEST_BUTTONS, TEST_CALLBACK);
 
       expect(result).to.equal(undefined);
       sinon.assert.calledOnce(requestSpy);

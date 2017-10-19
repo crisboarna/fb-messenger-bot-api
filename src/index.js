@@ -53,6 +53,17 @@ const imageMessagePayload = {
   }
 };
 
+const buttonsMessagePayload = {
+  'attachment': {
+    'type': 'template',
+    'payload': {
+      'template_type': 'button',
+      'text': undefined,
+      'buttons': undefined
+    }
+  }
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -154,6 +165,13 @@ class FbMessengerAPI {
     const jsonPayload = deepCopyPayload(imageMessagePayload);
     jsonPayload.attachment.payload.url = imageUrl;
     return sendDisplayMessage(id, jsonPayload, this._token, cb);
+  }
+
+  sendButtonsMessage (id, text, buttons, cb) {
+    const jsonPayload = deepCopyPayload(buttonsMessagePayload);
+    jsonPayload.attachment.payload.buttons = buttons;
+    jsonPayload.attachment.payload.text = text;
+    return sendDisplayMessage(id, jsonPayload, this._token, cb)
   }
 }
 
