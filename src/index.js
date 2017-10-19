@@ -18,6 +18,16 @@ const greetingSettingPayload = {
   }
 };
 
+const getStartedSettingPayload = {
+  'setting_type': 'call_to_actions',
+  'thread_state': 'new_thread',
+  'call_to_actions': [
+    {
+      'payload': undefined
+    }
+  ]
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -69,6 +79,12 @@ class FbMessengerAPI {
   setGreetingMessage (greetingMessage, cb) {
     const jsonPayload = deepCopyPayload(greetingSettingPayload);
     jsonPayload.greeting.text = greetingMessage;
+    return sendConfigurationMessage(jsonPayload, this._token, cb);
+  }
+
+  setGetStartedAction (getStartedPayload, cb) {
+    const jsonPayload = deepCopyPayload(getStartedSettingPayload);
+    jsonPayload.call_to_actions[0].payload = getStartedPayload;
     return sendConfigurationMessage(jsonPayload, this._token, cb);
   }
 }
