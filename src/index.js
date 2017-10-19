@@ -28,6 +28,17 @@ const getStartedSettingPayload = {
   ]
 };
 
+const persistentMenuSettingPayload = {
+  'setting_type': 'call_to_actions',
+  'thread_state': 'existing_thread',
+  'persistent_menu': [
+    {
+      'locale': 'default',
+      'call_to_actions': []
+    }
+  ]
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -71,6 +82,14 @@ const sendConfigurationMessage = function sendConfigurationMessage (payload, tok
   return sendMessage(options, token, cb);
 };
 
+const sendPersistentMenuMessage = function sendPersistentMenuMessage (payload, token, cb) {
+  const options = deepCopyPayload(requestOptions);
+  options.url += 'me/messenger_profile';
+  options.method = 'POST';
+  options.json = payload;
+  return sendMessage(options, token, cb);
+};
+
 class FbMessengerAPI {
   constructor (token) {
     this._token = token;
@@ -86,6 +105,12 @@ class FbMessengerAPI {
     const jsonPayload = deepCopyPayload(getStartedSettingPayload);
     jsonPayload.call_to_actions[0].payload = getStartedPayload;
     return sendConfigurationMessage(jsonPayload, this._token, cb);
+  }
+
+  setPersistentMenu (menuEntries, cb) {
+    const jsonPayload = deepCopyPayload(persistentMenuSettingPayload);
+    jsonPayload.persistent_menu[0].call_to_actions = menuEntries;
+    return sendPersistentMenuMessage(jsonPayload, this._token, cb);
   }
 }
 

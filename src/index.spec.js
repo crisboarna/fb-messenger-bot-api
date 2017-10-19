@@ -88,4 +88,41 @@ describe('MessengerClient', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
   });
+
+  describe('setPersistentMenu', () => {
+    const correctPayload = {
+      json: {
+        persistent_menu: [
+          {
+            call_to_actions: [TEST_TEXT],
+            locale: 'default'
+          }
+        ],
+        setting_type: 'call_to_actions',
+        thread_state: 'existing_thread'
+      },
+      method: 'POST',
+      qs: {
+        access_token: TEST_TOKEN
+      },
+      url: 'https://graph.facebook.com/v2.6/me/messenger_profile'
+    };
+
+    it('returns promise given no cb and generates correct request payload', () => {
+      const result = client.setPersistentMenu([TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.setPersistentMenu([TEST_TEXT], TEST_CALLBACK);
+
+      expect(typeof result).to.equal('undefined');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
 });
