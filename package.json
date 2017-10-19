@@ -1,15 +1,17 @@
 {
   "name": "fb-messenger-api",
-  "version": "0.1.0",
+  "version": "0.0.0-development",
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
-    "coverage": "nyc --reporter=html --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")"
+    "commit": "git-cz",
+    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w",
+    "coverage": "nyc --reporter=html --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crisboarna/fb-messenger-api.git"
+    "url": "https://github.com/crisboarna/fb-messenger-api.git"
   },
   "keywords": [
     "Facebook",
@@ -27,12 +29,18 @@
   "homepage": "https://github.com/crisboarna/fb-messenger-api#readme",
   "devDependencies": {
     "chai": "4.1.2",
+    "commitizen": "2.9.6",
+    "cz-conventional-changelog": "2.0.0",
     "mocha": "4.0.1",
     "nyc": "11.2.1",
     "proxyquire": "1.8.0",
+    "semantic-release": "8.2.0",
     "sinon": "4.0.1"
   },
   "dependencies": {
     "request": "2.83.0"
+  },
+  "czConfig": {
+    "path": "node_modules/cz-conventional-changelog"
   }
 }
