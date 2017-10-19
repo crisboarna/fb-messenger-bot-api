@@ -11,7 +11,7 @@
   "scripts": {
     "precommit": "npm test && npm run check-coverage",
     "prepush": "npm test",
-    "code-coverage": "nyc check-coverage --lines 65 --functions 75",
+    "check-coverage": "nyc check-coverage --lines 65 --functions 75",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "commit": "git-cz",
     "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
