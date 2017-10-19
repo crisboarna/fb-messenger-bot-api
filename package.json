@@ -14,7 +14,7 @@
     "check-coverage": "nyc check-coverage --lines 65 --functions 75",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "commit": "git-cz",
-    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
+    "test": "nyc --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
     "test-watch": "nyc --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w",
     "coverage": "nyc --reporter=html --reporter=lcov --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
