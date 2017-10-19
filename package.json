@@ -4,7 +4,8 @@
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
+    "coverage": "nyc --reporter=html --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,15 @@
   "bugs": {
     "url": "https://github.com/crisboarna/fb-messenger-api/issues"
   },
-  "homepage": "https://github.com/crisboarna/fb-messenger-api#readme"
+  "homepage": "https://github.com/crisboarna/fb-messenger-api#readme",
+  "devDependencies": {
+    "chai": "4.1.2",
+    "mocha": "4.0.1",
+    "nyc": "11.2.1",
+    "proxyquire": "1.8.0",
+    "sinon": "4.0.1"
+  },
+  "dependencies": {
+    "request": "2.83.0"
+  }
 }
