@@ -10,6 +10,7 @@ const MessengerClient = proxyquire('./index', {'request': requestSpy});
 
 describe('MessengerClient', () => {
   let client;
+  const TEST_ID = 0;
   const TEST_TOKEN = 'TEST_TOKEN';
   const TEST_TEXT = 'TEST_TEXT';
   const TEST_CALLBACK = () => {
@@ -119,6 +120,34 @@ describe('MessengerClient', () => {
 
     it('given cb no promise returned and correct payload generated', () => {
       const result = client.setPersistentMenu([TEST_TEXT], TEST_CALLBACK);
+
+      expect(typeof result).to.equal('undefined');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
+
+  describe('getUserProfile', () => {
+    const correctPayload = {
+      method: 'GET',
+      qs: {
+        access_token: TEST_TOKEN,
+        fields: `${TEST_TEXT},${TEST_TEXT}`
+      },
+      url: `https://graph.facebook.com/v2.6/${TEST_ID}`
+    };
+
+    it('returns promise given no cb and generates correct request payload', () => {
+      const result = client.getUserProfile(TEST_ID, [TEST_TEXT, TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.getUserProfile(TEST_ID, [TEST_TEXT, TEST_TEXT], TEST_CALLBACK);
 
       expect(typeof result).to.equal('undefined');
       sinon.assert.calledOnce(requestSpy);

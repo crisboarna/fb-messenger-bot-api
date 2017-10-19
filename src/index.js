@@ -112,6 +112,14 @@ class FbMessengerAPI {
     jsonPayload.persistent_menu[0].call_to_actions = menuEntries;
     return sendPersistentMenuMessage(jsonPayload, this._token, cb);
   }
+
+  getUserProfile (id, fieldsArray, cb) {
+    const options = deepCopyPayload(requestOptions);
+    options.url += id;
+    options.qs.fields = fieldsArray.join(',');
+    options.method = 'GET';
+    return sendMessage(options, this._token, cb);
+  }
 }
 
 module.exports = FbMessengerAPI;
