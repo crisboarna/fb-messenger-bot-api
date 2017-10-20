@@ -324,4 +324,69 @@ describe('MessengerClient', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
   });
+
+  describe('sendQuickReplyMessage', () => {
+    const correctPayload = {
+      json: {
+        message: {
+          text: TEST_TEXT,
+          quick_replies: [TEST_TEXT]
+        },
+        recipient: {
+          id: TEST_ID
+        }
+      },
+      method: 'POST',
+      qs: {
+        access_token: TEST_TOKEN
+      },
+      url: 'https://graph.facebook.com/v2.6/me/messages'
+    };
+
+    it('returns promise given no cb and generates correct request payload', () => {
+      const result = client.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('should make request with correct payload given non-text input', () => {
+      let correctPayload = {
+        json: {
+          message: {
+            attachment: {
+              attachment: {
+                payload: { elements: ['TEST_TEXT'], template_type: 'generic' },
+                type: 'template'
+              }
+            },
+            quick_replies: ['TEST_TEXT']
+          },
+          recipient: {
+            id: TEST_ID
+          }
+        },
+        method: 'POST',
+        qs: {
+          access_token: TEST_TOKEN
+        },
+        url: 'https://graph.facebook.com/v2.6/me/messages'
+      };
+
+      client.sendQuickReplyMessage(TEST_ID, [TEST_TEXT], [TEST_TEXT]);
+
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [TEST_TEXT], TEST_CALLBACK);
+
+      expect(result).to.equal(undefined);
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
 });

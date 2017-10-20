@@ -74,6 +74,10 @@ const genericMessagePayload = {
   }
 };
 
+const quickReplyPayload = {
+  'quick_replies': undefined
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -187,6 +191,22 @@ export class Client {
   sendGenericTemplateMessage (id, elements, cb) {
     const jsonPayload = deepCopyPayload(genericMessagePayload);
     jsonPayload.attachment.payload.elements = elements;
+    return sendDisplayMessage(id, jsonPayload, this._token, cb);
+  }
+
+  sendQuickReplyMessage (id, payload, quickReplies, cb) {
+    const jsonPayload = deepCopyPayload(quickReplyPayload);
+    const payloadType = typeof payload === 'string' ? 'text' : 'attachment';
+
+    if (payloadType !== 'text') {
+      const elements = deepCopyPayload(genericMessagePayload);
+      elements.attachment.payload.elements = payload;
+      payload = elements;
+    }
+
+    jsonPayload[payloadType] = payload;
+    jsonPayload.quick_replies = quickReplies;
+
     return sendDisplayMessage(id, jsonPayload, this._token, cb);
   }
 }
