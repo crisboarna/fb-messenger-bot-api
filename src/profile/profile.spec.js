@@ -30,7 +30,7 @@ describe('Profile', () => {
         },
         method: 'POST',
         qs: { access_token: 'TEST_TOKEN' },
-        url: 'https://graph.facebook.com/v2.6/me/thread_settings'
+        url: 'https://graph.facebook.com/v2.10/me/thread_settings'
       };
 
       client = new facebook.Profile(TEST_TOKEN);
@@ -56,7 +56,7 @@ describe('Profile', () => {
         qs: {
           access_token: 'TEST_TOKEN'
         },
-        url: 'https://graph.facebook.com/v2.6/me/thread_settings'
+        url: 'https://graph.facebook.com/v2.10/me/thread_settings'
       };
 
       client = new facebook.Profile(TEST_TOKEN, {hostname: TEST_TEXT, port: TEST_TEXT});
@@ -97,7 +97,7 @@ describe('Profile', () => {
       qs: {
         access_token: TEST_TOKEN
       },
-      url: 'https://graph.facebook.com/v2.6/me/thread_settings'
+      url: 'https://graph.facebook.com/v2.10/me/thread_settings'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -133,7 +133,7 @@ describe('Profile', () => {
       qs: {
         access_token: TEST_TOKEN
       },
-      url: 'https://graph.facebook.com/v2.6/me/thread_settings'
+      url: 'https://graph.facebook.com/v2.10/me/thread_settings'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -170,7 +170,7 @@ describe('Profile', () => {
       qs: {
         access_token: TEST_TOKEN
       },
-      url: 'https://graph.facebook.com/v2.6/me/messenger_profile'
+      url: 'https://graph.facebook.com/v2.10/me/messenger_profile'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {

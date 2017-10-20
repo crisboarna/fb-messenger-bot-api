@@ -40,7 +40,7 @@ describe('Client', () => {
           access_token: 'TEST_TOKEN',
           fields: 'TEST_TEXT'
         },
-        url: `https://graph.facebook.com/v2.6/${TEST_ID}`
+        url: `https://graph.facebook.com/v2.10/${TEST_ID}`
       };
 
       client = new facebook.MessagingClient(TEST_TOKEN);
@@ -60,7 +60,7 @@ describe('Client', () => {
           access_token: 'TEST_TOKEN',
           fields: `${TEST_TEXT}`
         },
-        url: `https://graph.facebook.com/v2.6/${TEST_ID}`,
+        url: `https://graph.facebook.com/v2.10/${TEST_ID}`,
         proxy: `http://${TEST_TEXT}:${TEST_TEXT}`
       };
 
@@ -102,7 +102,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns promise given no cb and generates correct payload', () => {
@@ -137,7 +137,7 @@ describe('Client', () => {
           qs: {
             access_token: 'TEST_TOKEN'
           },
-          url: 'https://graph.facebook.com/v2.6/me/messages'
+          url: 'https://graph.facebook.com/v2.10/me/messages'
         };
 
         const result = client.toggleTyping(TEST_ID, true);
@@ -160,7 +160,7 @@ describe('Client', () => {
           qs: {
             access_token: 'TEST_TOKEN'
           },
-          url: 'https://graph.facebook.com/v2.6/me/messages'
+          url: 'https://graph.facebook.com/v2.10/me/messages'
         };
 
         const result = client.toggleTyping(TEST_ID, true, TEST_CALLBACK);
@@ -184,7 +184,7 @@ describe('Client', () => {
           qs: {
             access_token: 'TEST_TOKEN'
           },
-          url: 'https://graph.facebook.com/v2.6/me/messages'
+          url: 'https://graph.facebook.com/v2.10/me/messages'
         };
 
         const result = client.toggleTyping(TEST_ID, false);
@@ -207,7 +207,7 @@ describe('Client', () => {
           qs: {
             access_token: 'TEST_TOKEN'
           },
-          url: 'https://graph.facebook.com/v2.6/me/messages'
+          url: 'https://graph.facebook.com/v2.10/me/messages'
         };
 
         const result = client.toggleTyping(TEST_ID, false, TEST_CALLBACK);
@@ -226,7 +226,7 @@ describe('Client', () => {
         access_token: 'TEST_TOKEN',
         fields: `${TEST_TEXT},${TEST_TEXT}`
       },
-      url: `https://graph.facebook.com/v2.6/${TEST_ID}`
+      url: `https://graph.facebook.com/v2.10/${TEST_ID}`
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -261,7 +261,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns a promise and creates correct request payload', () => {
@@ -302,7 +302,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -344,7 +344,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns a promise and generates correct request payload given no cb', () => {
@@ -385,7 +385,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -399,6 +399,91 @@ describe('Client', () => {
 
     it('given cb no promise returned and correct payload generated', () => {
       const result = client.sendGenericTemplateMessage(TEST_ID, [TEST_TEXT], TEST_CALLBACK);
+
+      expect(result).to.equal(undefined);
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
+
+  describe('sendListMessage', () => {
+    const correctPayload = {
+      json: {
+        message: {
+          attachment: {
+            payload: {
+              buttons: ['TEST_TEXT'],
+              elements: ['TEST_TEXT'],
+              template_type: 'list',
+              top_element_style: 'large'
+            },
+            type: 'template'
+          }
+        },
+        recipient: {
+          id: TEST_ID
+        }
+      },
+      method: 'POST',
+      qs: {
+        access_token: 'TEST_TOKEN'
+      },
+      url: 'https://graph.facebook.com/v2.10/me/messages'
+    };
+
+    it('returns promise given no cb and no correct firstElementType generates correct request payload', () => {
+      const result = client.sendListMessage(TEST_ID, [TEST_TEXT], TEST_TEXT, [TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('returns promise given no cb and no firstElementType and generates correct request payload', () => {
+      const result = client.sendListMessage(TEST_ID, [TEST_TEXT], TEST_TEXT, [TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('returns promise given no cb and compact firstElementType and generates correct request payload', () => {
+      const correctPayload = {
+        json: {
+          message: {
+            attachment: {
+              payload: {
+                buttons: ['TEST_TEXT'],
+                elements: ['TEST_TEXT'],
+                template_type: 'list',
+                top_element_style: 'compact'
+              },
+              type: 'template'
+            }
+          },
+          recipient: {
+            id: TEST_ID
+          }
+        },
+        method: 'POST',
+        qs: {
+          access_token: 'TEST_TOKEN'
+        },
+        url: 'https://graph.facebook.com/v2.10/me/messages'
+      };
+
+      const result = client.sendListMessage(TEST_ID, [TEST_TEXT], 'compact', [TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.sendListMessage(TEST_ID, [TEST_TEXT], TEST_TEXT, [TEST_TEXT], TEST_CALLBACK);
 
       expect(result).to.equal(undefined);
       sinon.assert.calledOnce(requestSpy);
@@ -421,7 +506,7 @@ describe('Client', () => {
       qs: {
         access_token: 'TEST_TOKEN'
       },
-      url: 'https://graph.facebook.com/v2.6/me/messages'
+      url: 'https://graph.facebook.com/v2.10/me/messages'
     };
 
     it('returns promise given no cb and generates correct request payload', () => {
@@ -453,7 +538,7 @@ describe('Client', () => {
         qs: {
           access_token: 'TEST_TOKEN'
         },
-        url: 'https://graph.facebook.com/v2.6/me/messages'
+        url: 'https://graph.facebook.com/v2.10/me/messages'
       };
 
       client.sendQuickReplyMessage(TEST_ID, [TEST_TEXT], [TEST_TEXT]);

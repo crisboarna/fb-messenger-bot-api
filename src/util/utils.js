@@ -42,7 +42,7 @@ const deepCopyPayload = function deepCopyPayload (payloadType) {
 };
 
 const requestOptions = {
-  url: 'https://graph.facebook.com/v2.6/',
+  url: 'https://graph.facebook.com/v2.10/',
   qs: {
     access_token: undefined
   },

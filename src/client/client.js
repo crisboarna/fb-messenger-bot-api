@@ -42,6 +42,20 @@ const genericMessagePayload = {
   }
 };
 
+const topElementStyles = ['large', 'compact'];
+
+const listMessagePayload = {
+  'attachment': {
+    'type': 'template',
+    'payload': {
+      'template_type': 'list',
+      'top_element_style': undefined,
+      'elements': undefined,
+      'buttons': undefined
+    }
+  }
+};
+
 const quickReplyPayload = {
   'quick_replies': undefined
 };
@@ -129,6 +143,18 @@ export class MessagingClient {
   sendGenericTemplateMessage (id, elements, cb) {
     const jsonPayload = deepCopyPayload(genericMessagePayload);
     jsonPayload.attachment.payload.elements = elements;
+    return sendDisplayMessage(id, jsonPayload, this._requestData, cb);
+  }
+
+  sendListMessage (id, listElements, firstListElementStyle, finalButtons, cb) {
+    const jsonPayload = deepCopyPayload(listMessagePayload);
+    jsonPayload.attachment.payload.elements = listElements;
+    if (topElementStyles.includes(firstListElementStyle)) {
+      jsonPayload.attachment.payload.top_element_style = firstListElementStyle;
+    } else {
+      jsonPayload.attachment.payload.top_element_style = topElementStyles[0];
+    }
+    jsonPayload.attachment.payload.buttons = finalButtons;
     return sendDisplayMessage(id, jsonPayload, this._requestData, cb);
   }
 
