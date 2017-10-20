@@ -2,27 +2,32 @@
   "name": "fb-messenger-bot-api",
   "version": "0.0.0-development",
   "description": "NodeJS Facebook Messenger API for bots to send messages and setup events to Facebook.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "scripts": {
+    "prebuild": "rimraf ./dist",
+    "build": "babel --copy-files --ignore *.spec.js --out-dir dist src",
     "precommit": "npm test && npm run check-coverage",
-    "prepush": "npm test",
-    "check-coverage": "nyc check-coverage --lines 65 --functions 75",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "commit": "git-cz",
-    "test": "nyc --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
-    "test-watch": "nyc --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w",
-    "coverage": "nyc --reporter=html --reporter=lcov --reporter=text -x **/**.spec.js mocha $(find src -name \"*.spec.js\")",
+    "prepush": "npm test",
+    "check-coverage": "nyc check-coverage --lines 98 --functions 98 --statements 98 --branches 98",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "test": "standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
+    "test-watch": "nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/crisboarna/fb-messenger-bot-api.git"
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "keywords": [
     "Facebook",
     "Messenger",
@@ -38,6 +43,10 @@
   },
   "homepage": "https://github.com/crisboarna/fb-messenger-bot-api#readme",
   "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "babel-register": "6.26.0",
     "chai": "4.1.2",
     "codecov.io": "0.1.6",
     "commitizen": "2.9.6",
@@ -46,10 +55,25 @@
     "mocha": "4.0.1",
     "nyc": "11.2.1",
     "proxyquire": "1.8.0",
+    "rimraf": "2.6.2",
     "semantic-release": "8.2.0",
-    "sinon": "4.0.1"
+    "sinon": "4.0.1",
+    "standard": "10.0.3"
   },
   "dependencies": {
     "request": "2.83.0"
+  },
+  "standard": {
+    "globals": [
+      "describe",
+      "it",
+      "beforeEach"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ]
   }
 }
