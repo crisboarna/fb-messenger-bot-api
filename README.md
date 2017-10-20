@@ -163,6 +163,7 @@ const router = require('express').Router();
 router.get('/api/webhook',facebook.ValidateWebhook.validate);
 ```
 Example based on usage with Express Router, can use any other middleware which passes in the req and response objects.
+Assumes verification token set under `process.env.FB_VERIFICATION_TOKEN`.
 ## Complete example
 ```javascript
 const router = require('express').Router();

@@ -29,7 +29,7 @@ describe('Client', () => {
 
   beforeEach(() => {
     requestSpy.reset();
-    client = new facebook.MessagingClient(TEST_TOKEN);
+    client = new facebook.Client(TEST_TOKEN);
   });
 
   describe('constructor', () => {
@@ -43,7 +43,7 @@ describe('Client', () => {
         url: `https://graph.facebook.com/v2.10/${TEST_ID}`
       };
 
-      client = new facebook.MessagingClient(TEST_TOKEN);
+      client = new facebook.Client(TEST_TOKEN);
 
       const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
 
@@ -64,7 +64,7 @@ describe('Client', () => {
         proxy: `http://${TEST_TEXT}:${TEST_TEXT}`
       };
 
-      client = new facebook.MessagingClient(TEST_TOKEN, {hostname: TEST_TEXT, port: TEST_TEXT});
+      client = new facebook.Client(TEST_TOKEN, {hostname: TEST_TEXT, port: TEST_TEXT});
 
       const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
 
@@ -85,7 +85,7 @@ describe('Client', () => {
         proxy: `http://${TEST_TEXT}:${TEST_TEXT}`
       };
 
-      client = new facebook.MessagingClient(TEST_TOKEN, {hostname: `http://${TEST_TEXT}`, port: TEST_TEXT});
+      client = new facebook.Client(TEST_TOKEN, {hostname: `http://${TEST_TEXT}`, port: TEST_TEXT});
 
       const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
 
@@ -96,17 +96,17 @@ describe('Client', () => {
     });
 
     it('throw error given bad proxy object', () => {
-      expect(() => new facebook.MessagingClient(TEST_TOKEN, TEST_TEXT)).to.throw();
+      expect(() => new facebook.Client(TEST_TOKEN, TEST_TEXT)).to.throw();
       sinon.assert.notCalled(requestSpy);
     });
 
     it('throw error given bad proxy object properties', () => {
-      expect(() => new facebook.MessagingClient(TEST_TOKEN, {host: TEST_TEXT, port: TEST_TEXT})).to.throw();
+      expect(() => new facebook.Client(TEST_TOKEN, {host: TEST_TEXT, port: TEST_TEXT})).to.throw();
       sinon.assert.notCalled(requestSpy);
     });
 
     it('throw error given bad proxy object properties', () => {
-      expect(() => new facebook.MessagingClient(TEST_TOKEN, {hostname: TEST_TEXT, prt: TEST_TEXT})).to.throw();
+      expect(() => new facebook.Client(TEST_TOKEN, {hostname: TEST_TEXT, prt: TEST_TEXT})).to.throw();
       sinon.assert.notCalled(requestSpy);
     });
   });

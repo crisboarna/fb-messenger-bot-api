@@ -80,7 +80,7 @@ const sendAction = function sendAction (id, payload, requestData, cb) {
   return sendMessage(options, requestData, cb);
 };
 
-export class MessagingClient {
+export class Client {
   constructor (token, proxyData) {
     this._requestData = {};
     this._requestData.token = token;
