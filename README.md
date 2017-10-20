@@ -18,7 +18,7 @@
 npm install fb-messenger-bot-api
 ```
 
-##Features
+## Features
 * Promises and callback support on all functions, if no callback provided, promise returned, allows you to manage flow as you desire AND to <b>ensure message ordering</b><br />
 * Supports proxying
 * ES6+ code
@@ -31,7 +31,7 @@ Import
 const facebook = require('fb-messenger-bot-api');
 ```
 
-##Sending Messages
+## Sending Messages
 Initialize
 ```javascript
 const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
@@ -75,7 +75,7 @@ client.sendGenericTemplate(senderId, [ELEMENTS])
 ```
 [Generic Template element format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)
 
-##User Profile
+## User Profile
 ```javascript
 client.getUserProfile(senderId,[<PROPERTIES>])
     .then((result) => ...)
@@ -83,7 +83,7 @@ client.getUserProfile(senderId,[<PROPERTIES>])
 Valid properties: `first_name`,`last_name`,`profile_pic`,`locale`,`timezone`,`gender`,`is_payment_enabled`,`last_ad_referral`
 If none are given defaults to `first_name` only.
 
-##Complete example
+## Complete example
 ```javascript
 const facebook = require('fb-messenger-bot-api');
 const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
@@ -98,7 +98,7 @@ client.sendTextMessage('123456789', 'Hello',(result) => console.log(`Result sent
 //silent message sending
 client.sendTextMessage('123456789','Hello');
 ```
-##Setting Messenger Profile
+## Setting Messenger Profile
 Initialize
 ```javascript
 const client = new facebook.Profile(process.env.PAGE_ACCESS_TOKEN);
