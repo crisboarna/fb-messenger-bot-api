@@ -64,6 +64,16 @@ const buttonsMessagePayload = {
   }
 };
 
+const genericMessagePayload = {
+  'attachment': {
+    'type': 'template',
+    'payload': {
+      'template_type': 'generic',
+      'elements': undefined
+    }
+  }
+};
+
 const deepCopyPayload = function deepCopyPayload (payloadType) {
   return JSON.parse(JSON.stringify(payloadType));
 };
@@ -172,5 +182,11 @@ export class Client {
     jsonPayload.attachment.payload.buttons = buttons;
     jsonPayload.attachment.payload.text = text;
     return sendDisplayMessage(id, jsonPayload, this._token, cb)
+  }
+
+  sendGenericTemplateMessage (id, elements, cb) {
+    const jsonPayload = deepCopyPayload(genericMessagePayload);
+    jsonPayload.attachment.payload.elements = elements;
+    return sendDisplayMessage(id, jsonPayload, this._token, cb);
   }
 }
