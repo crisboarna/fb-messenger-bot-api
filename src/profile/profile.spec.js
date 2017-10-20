@@ -69,6 +69,32 @@ describe('Profile', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
 
+    it('should create request with access token and proxy with full http path', () => {
+      const correctPayload = {
+        json: {
+          greeting: {
+            text: 'TEST_TEXT'
+          },
+          setting_type: 'greeting'
+        },
+        method: 'POST',
+        proxy: 'http://TEST_TEXT:TEST_TEXT',
+        qs: {
+          access_token: 'TEST_TOKEN'
+        },
+        url: 'https://graph.facebook.com/v2.10/me/thread_settings'
+      };
+
+      client = new facebook.Profile(TEST_TOKEN, {hostname: `http://${TEST_TEXT}`, port: TEST_TEXT});
+
+      const result = client.setGreetingMessage(TEST_TEXT);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
     it('throw error given bad proxy object', () => {
       expect(() => new facebook.Profile(TEST_TOKEN, TEST_TEXT)).to.throw();
       sinon.assert.notCalled(requestSpy);

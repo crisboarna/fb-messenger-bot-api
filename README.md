@@ -18,11 +18,32 @@
 npm install fb-messenger-bot-api
 ```
 
+## Table of Contents
+* [Features](#features)
+* [Setup](#setup)
+* [Sending Messages](#sending-messages)
+  * [Text Message](#text-message)
+  * [Image Message](#image-message)
+  * [Buttons Message](#buttons-message)
+  * [Quick Reply Message](#quick-reply-message)
+  * [Generic Template List (Horizontal Scroll List)](#generic-template-list-(-horizontal-scroll-list-))
+  * [List Message ( Vertical Scroll List)](#list-message-(-vertical-scroll-list-))
+  * [Mark as Seen](#mark-as-seen)
+  * [Toggle Writing Bubble](#toggle-writing-bubble)
+  * [User Profile](#user-profile)
+* [Setting Messenger Profile](#setting-messenger-profile)
+  * [Setting Greeting Message](#setting-greeting-message)
+  * [Setting Get Started Button](#setting-get-started-button)
+  * [Setting Persistent Menu](#setting-persistent-menu)
+* [Validating Facebook Webhook](#validating-facebook-webhook)
+* [Complete Example](#complete-example)
+* [Creating Facebook App](#creating-facebook-app)
+
 ## Features
 * Promises and callback support on all functions, if no callback provided, promise returned, allows you to manage flow as you desire AND to <b>ensure message ordering</b><br />
 * Supports proxying
 * ES6+ code
-* Facebook API v2.6
+* Using latest Facebook API v2.10
 
 ## Setup
 
@@ -68,14 +89,36 @@ client.sendQuickReplyMessage(senderId, <TEXT>, [<QUICK_REPLIES>])
 ```
 [Quick Reply format](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies)
 
-### Generic Template ( Horizontal Scroll List)
+### Generic Template Message ( Horizontal Scroll List)
 ```javascript
 client.sendGenericTemplate(senderId, [ELEMENTS])
     .then((result) => ...)
 ```
 [Generic Template element format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)
 
-## User Profile
+### List Message ( Vertical Scroll List)
+```javascript
+client.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS])
+    .then((result) => ...)
+```
+`firstElementStyle` is optional. If not provided defaults to `large`
+
+[List Template element format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/list)
+
+### Mark as Seen
+```javascript
+client.markSeen(senderId);
+```
+As per all methods, callback can be provided. If no callback provided returns promise. Recommended to send and continue processing without waiting for reply.
+
+### Toggle writing bubble
+```javascript
+client.toggleTyping(senderId, <true/false>);
+```
+As per all methods, callback can be provided. If no callback provided returns promise. Recommended to send and continue processing without waiting for reply.
+Defaults to `false` if no boolean parameter provided.
+
+### User Profile
 ```javascript
 client.getUserProfile(senderId,[<PROPERTIES>])
     .then((result) => ...)
@@ -83,21 +126,6 @@ client.getUserProfile(senderId,[<PROPERTIES>])
 Valid properties: `first_name`,`last_name`,`profile_pic`,`locale`,`timezone`,`gender`,`is_payment_enabled`,`last_ad_referral`
 If none are given defaults to `first_name` only.
 
-## Complete example
-```javascript
-const facebook = require('fb-messenger-bot-api');
-const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
-
-//promise based reaction on message send confirmation
-client.sendTextMessage('123456789','Hello')
-    .then((result) => console.log(`Result sent with: ${result}`));
-
-//callback based reaction on message confirmation
-client.sendTextMessage('123456789', 'Hello',(result) => console.log(`Result sent with: ${result}`));
-
-//silent message sending
-client.sendTextMessage('123456789','Hello');
-```
 ## Setting Messenger Profile
 Initialize
 ```javascript
@@ -128,5 +156,35 @@ client.setPersistentMenu(senderId, [<MENU_ENTRIES>])
 This is a burger menu appearing next to the chat input field where users can click and get direct interaction shortcuts to specific functionality of the bot.
 [Persistent menu format](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu)
 
-## Creating facebook app
-[See facebook tutorial](https://developers.facebook.com/docs/messenger-platform/guides/quick-start)
+## Validating Facebook Webhook
+```javascript
+const facebook = require('fb-messenger-bot-api');
+const router = require('express').Router();
+router.get('/api/webhook',facebook.ValidateWebhook.validate);
+```
+Example based on usage with Express Router, can use any other middleware which passes in the req and response objects.
+## Complete example
+```javascript
+const router = require('express').Router();
+const facebook = require('fb-messenger-bot-api');
+const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
+...
+router.get('/api/webhook',facebook.ValidateWebhook.validate);
+...
+client.markSeen(senderId)
+  .then(() => client.toggleTyping(senderId,true))
+  .catch((err) => console.log(error));
+...
+//promise based reaction on message send confirmation
+client.sendTextMessage(senderId, 'Hello')
+    .then((result) => console.log(`Result sent with: ${result}`));
+...
+//callback based reaction on message confirmation
+client.sendTextMessage(senderId, 'Hello',(result) => console.log(`Result sent with: ${result}`));
+...
+//silent message sending
+client.sendTextMessage(senderId,'Hello');
+```
+
+## Creating Facebook app
+[See Facebook Guide](https://developers.facebook.com/docs/messenger-platform/guides/quick-start)

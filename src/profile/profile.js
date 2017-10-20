@@ -53,7 +53,11 @@ export class Profile {
     this._requestData.token = token;
     if (proxyData != null) {
       if (Object.prototype.toString.call(proxyData) === '[object Object]' && proxyData.hasOwnProperty('hostname') && proxyData.hasOwnProperty('port')) {
-        this._requestData.proxy = proxyData.hostname.indexOf('http') > 0 ? `${proxyData.hostname}:${proxyData.port}` : `http://${proxyData.hostname}:${proxyData.port}`
+        if (proxyData.hostname.indexOf('http') === 0) {
+          this._requestData.proxy = `${proxyData.hostname}:${proxyData.port}`;
+        } else {
+          this._requestData.proxy = `http://${proxyData.hostname}:${proxyData.port}`;
+        }
       } else {
         throw new Error('Invalid Proxy given, expected hostname and port');
       }

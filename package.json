@@ -14,7 +14,7 @@
     "precommit": "npm test && npm run check-coverage",
     "commit": "git-cz",
     "prepush": "npm test",
-    "check-coverage": "nyc check-coverage --lines 85 --functions 80 --statements 85",
+    "check-coverage": "nyc check-coverage --lines 98 --functions 98 --statements 98 --branches 98",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
     "test": "standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
     "test-watch": "nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",

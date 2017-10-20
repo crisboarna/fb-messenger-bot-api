@@ -15,12 +15,12 @@ const sendMessage = function sendMessage (options, requestData, cb) {
         if (err) {
           reject(err);
         } else {
-          if (!((!!body) && (body.constructor === Object))) {
+          if (!(body && (body.constructor === Object))) {
             let bodyObject = JSON.parse(body);
             if (bodyObject.error) {
               reject(bodyObject.error.message);
             } else {
-              resolve(body);
+              resolve(bodyObject);
             }
           } else {
             resolve(body);

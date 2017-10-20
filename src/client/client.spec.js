@@ -74,6 +74,27 @@ describe('Client', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
 
+    it('should create request with access token and proxy with full http path', () => {
+      const correctPayload = {
+        method: 'GET',
+        qs: {
+          access_token: 'TEST_TOKEN',
+          fields: `${TEST_TEXT}`
+        },
+        url: `https://graph.facebook.com/v2.10/${TEST_ID}`,
+        proxy: `http://${TEST_TEXT}:${TEST_TEXT}`
+      };
+
+      client = new facebook.MessagingClient(TEST_TOKEN, {hostname: `http://${TEST_TEXT}`, port: TEST_TEXT});
+
+      const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
     it('throw error given bad proxy object', () => {
       expect(() => new facebook.MessagingClient(TEST_TOKEN, TEST_TEXT)).to.throw();
       sinon.assert.notCalled(requestSpy);
@@ -125,21 +146,21 @@ describe('Client', () => {
 
   describe('toggleTyping', () => {
     describe('on', () => {
-      it('returns promise given no cb and generates correct payload', () => {
-        const correctPayload = {
-          json: {
-            recipient: {
-              id: 0
-            },
-            sender_action: 'typing_on'
+      const correctPayload = {
+        json: {
+          recipient: {
+            id: 0
           },
-          method: 'POST',
-          qs: {
-            access_token: 'TEST_TOKEN'
-          },
-          url: 'https://graph.facebook.com/v2.10/me/messages'
-        };
+          sender_action: 'typing_on'
+        },
+        method: 'POST',
+        qs: {
+          access_token: 'TEST_TOKEN'
+        },
+        url: 'https://graph.facebook.com/v2.10/me/messages'
+      };
 
+      it('returns promise given no cb and generates correct payload', () => {
         const result = client.toggleTyping(TEST_ID, true);
 
         expect(typeof result.then).to.be.equal('function');
@@ -149,20 +170,6 @@ describe('Client', () => {
       });
 
       it('given cb no promise returned and correct payload generated', () => {
-        const correctPayload = {
-          json: {
-            recipient: {
-              id: 0
-            },
-            sender_action: 'typing_on'
-          },
-          method: 'POST',
-          qs: {
-            access_token: 'TEST_TOKEN'
-          },
-          url: 'https://graph.facebook.com/v2.10/me/messages'
-        };
-
         const result = client.toggleTyping(TEST_ID, true, TEST_CALLBACK);
 
         expect(typeof result).to.equal('undefined');
@@ -172,21 +179,21 @@ describe('Client', () => {
     });
 
     describe('off', () => {
-      it('returns promise given no cb and generates correct payload', () => {
-        const correctPayload = {
-          json: {
-            recipient: {
-              id: 0
-            },
-            sender_action: 'typing_off'
+      const correctPayload = {
+        json: {
+          recipient: {
+            id: 0
           },
-          method: 'POST',
-          qs: {
-            access_token: 'TEST_TOKEN'
-          },
-          url: 'https://graph.facebook.com/v2.10/me/messages'
-        };
+          sender_action: 'typing_off'
+        },
+        method: 'POST',
+        qs: {
+          access_token: 'TEST_TOKEN'
+        },
+        url: 'https://graph.facebook.com/v2.10/me/messages'
+      };
 
+      it('returns promise given no cb and generates correct payload', () => {
         const result = client.toggleTyping(TEST_ID, false);
 
         expect(typeof result.then).to.be.equal('function');
@@ -195,21 +202,15 @@ describe('Client', () => {
         sinon.assert.calledWith(requestSpy, correctPayload);
       });
 
-      it('given cb no promise returned and correct payload generated', () => {
-        const correctPayload = {
-          json: {
-            recipient: {
-              id: 0
-            },
-            sender_action: 'typing_off'
-          },
-          method: 'POST',
-          qs: {
-            access_token: 'TEST_TOKEN'
-          },
-          url: 'https://graph.facebook.com/v2.10/me/messages'
-        };
+      it('given cb and no toggle then no promise returned and correct payload generated', () => {
+        const result = client.toggleTyping(TEST_ID, TEST_CALLBACK);
 
+        expect(typeof result).to.equal('undefined');
+        sinon.assert.calledOnce(requestSpy);
+        sinon.assert.calledWith(requestSpy, correctPayload);
+      });
+
+      it('given cb no promise returned and correct payload generated', () => {
         const result = client.toggleTyping(TEST_ID, false, TEST_CALLBACK);
 
         expect(typeof result).to.equal('undefined');
@@ -231,6 +232,24 @@ describe('Client', () => {
 
     it('returns promise given no cb and generates correct request payload', () => {
       const result = client.getUserProfile(TEST_ID, [TEST_TEXT, TEST_TEXT]);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('returns promise given no cb and no fields and generates correct request payload', () => {
+      const correctPayload = {
+        method: 'GET',
+        qs: {
+          access_token: 'TEST_TOKEN',
+          fields: `first_name`
+        },
+        url: `https://graph.facebook.com/v2.10/${TEST_ID}`
+      };
+
+      const result = client.getUserProfile(TEST_ID);
 
       expect(typeof result.then).to.be.equal('function');
       expect(typeof result.catch).to.be.equal('function');

@@ -86,7 +86,11 @@ export class MessagingClient {
     this._requestData.token = token;
     if (proxyData != null) {
       if (Object.prototype.toString.call(proxyData) === '[object Object]' && proxyData.hasOwnProperty('hostname') && proxyData.hasOwnProperty('port')) {
-        this._requestData.proxy = proxyData.hostname.indexOf('http') > 0 ? `${proxyData.hostname}:${proxyData.port}` : `http://${proxyData.hostname}:${proxyData.port}`
+        if (proxyData.hostname.indexOf('http') === 0) {
+          this._requestData.proxy = `${proxyData.hostname}:${proxyData.port}`;
+        } else {
+          this._requestData.proxy = `http://${proxyData.hostname}:${proxyData.port}`;
+        }
       } else {
         throw new Error('Invalid Proxy given, expected hostname and port');
       }
@@ -98,10 +102,22 @@ export class MessagingClient {
   }
 
   toggleTyping (id, toggle, cb) {
-    if (toggle) {
-      return sendAction(id, typingOn, this._requestData, cb);
+    const toggleAction = function toggleAction (toggleValue, requestData) {
+      if (toggleValue) {
+        return sendAction(id, typingOn, requestData, cb);
+      } else {
+        return sendAction(id, typingOff, requestData, cb);
+      }
+    };
+
+    if (arguments.length === 3) {
+      return toggleAction(toggle, this._requestData);
     } else {
-      return sendAction(id, typingOff, this._requestData, cb);
+      if (Object.prototype.toString.call(toggle) === '[object Function]') {
+        return sendAction(id, typingOff, this._requestData, toggle);
+      } else {
+        return toggleAction(toggle, this._requestData);
+      }
     }
   }
 
