@@ -3,6 +3,10 @@
 
 import { sendMessage, deepCopyPayload, requestOptions } from '../util/utils';
 
+const markSeen = 'mark_seen';
+const typingOn = 'typing_on';
+const typingOff = 'typing_off';
+
 const textMessagePayload = {
   text: undefined
 };
@@ -42,12 +46,23 @@ const quickReplyPayload = {
   'quick_replies': undefined
 };
 
-const sendDisplayMessage = function sendDisplayMessage (id, payload, requestData, cb) {
+const generateBasicRequestPayload = function generateBasicRequestPayload (id) {
   const options = deepCopyPayload(requestOptions);
   options.url += 'me/messages';
   options.method = 'POST';
   options.json = {recipient: {id: id}};
+  return options;
+};
+
+const sendDisplayMessage = function sendDisplayMessage (id, payload, requestData, cb) {
+  const options = generateBasicRequestPayload(id);
   options.json.message = payload;
+  return sendMessage(options, requestData, cb);
+};
+
+const sendAction = function sendAction (id, payload, requestData, cb) {
+  const options = generateBasicRequestPayload(id);
+  options.json.sender_action = payload;
   return sendMessage(options, requestData, cb);
 };
 
@@ -61,6 +76,18 @@ export class MessagingClient {
       } else {
         throw new Error('Invalid Proxy given, expected hostname and port');
       }
+    }
+  }
+
+  markSeen (id, cb) {
+    return sendAction(id, markSeen, this._requestData, cb);
+  }
+
+  toggleTyping (id, toggle, cb) {
+    if (toggle) {
+      return sendAction(id, typingOn, this._requestData, cb);
+    } else {
+      return sendAction(id, typingOff, this._requestData, cb);
     }
   }
 

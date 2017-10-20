@@ -90,6 +90,135 @@ describe('Client', () => {
     });
   });
 
+  describe('markSeen', () => {
+    const correctPayload = {
+      json: {
+        recipient: {
+          id: 0
+        },
+        sender_action: 'mark_seen'
+      },
+      method: 'POST',
+      qs: {
+        access_token: 'TEST_TOKEN'
+      },
+      url: 'https://graph.facebook.com/v2.6/me/messages'
+    };
+
+    it('returns promise given no cb and generates correct payload', () => {
+      const result = client.markSeen(TEST_ID);
+
+      expect(typeof result.then).to.be.equal('function');
+      expect(typeof result.catch).to.be.equal('function');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+
+    it('given cb no promise returned and correct payload generated', () => {
+      const result = client.markSeen(TEST_ID, TEST_CALLBACK);
+
+      expect(typeof result).to.equal('undefined');
+      sinon.assert.calledOnce(requestSpy);
+      sinon.assert.calledWith(requestSpy, correctPayload);
+    });
+  });
+
+  describe('toggleTyping', () => {
+    describe('on', () => {
+      it('returns promise given no cb and generates correct payload', () => {
+        const correctPayload = {
+          json: {
+            recipient: {
+              id: 0
+            },
+            sender_action: 'typing_on'
+          },
+          method: 'POST',
+          qs: {
+            access_token: 'TEST_TOKEN'
+          },
+          url: 'https://graph.facebook.com/v2.6/me/messages'
+        };
+
+        const result = client.toggleTyping(TEST_ID, true);
+
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        sinon.assert.calledOnce(requestSpy);
+        sinon.assert.calledWith(requestSpy, correctPayload);
+      });
+
+      it('given cb no promise returned and correct payload generated', () => {
+        const correctPayload = {
+          json: {
+            recipient: {
+              id: 0
+            },
+            sender_action: 'typing_on'
+          },
+          method: 'POST',
+          qs: {
+            access_token: 'TEST_TOKEN'
+          },
+          url: 'https://graph.facebook.com/v2.6/me/messages'
+        };
+
+        const result = client.toggleTyping(TEST_ID, true, TEST_CALLBACK);
+
+        expect(typeof result).to.equal('undefined');
+        sinon.assert.calledOnce(requestSpy);
+        sinon.assert.calledWith(requestSpy, correctPayload);
+      });
+    });
+
+    describe('off', () => {
+      it('returns promise given no cb and generates correct payload', () => {
+        const correctPayload = {
+          json: {
+            recipient: {
+              id: 0
+            },
+            sender_action: 'typing_off'
+          },
+          method: 'POST',
+          qs: {
+            access_token: 'TEST_TOKEN'
+          },
+          url: 'https://graph.facebook.com/v2.6/me/messages'
+        };
+
+        const result = client.toggleTyping(TEST_ID, false);
+
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        sinon.assert.calledOnce(requestSpy);
+        sinon.assert.calledWith(requestSpy, correctPayload);
+      });
+
+      it('given cb no promise returned and correct payload generated', () => {
+        const correctPayload = {
+          json: {
+            recipient: {
+              id: 0
+            },
+            sender_action: 'typing_off'
+          },
+          method: 'POST',
+          qs: {
+            access_token: 'TEST_TOKEN'
+          },
+          url: 'https://graph.facebook.com/v2.6/me/messages'
+        };
+
+        const result = client.toggleTyping(TEST_ID, false, TEST_CALLBACK);
+
+        expect(typeof result).to.equal('undefined');
+        sinon.assert.calledOnce(requestSpy);
+        sinon.assert.calledWith(requestSpy, correctPayload);
+      });
+    });
+  });
+
   describe('getUserProfile', () => {
     const correctPayload = {
       method: 'GET',
