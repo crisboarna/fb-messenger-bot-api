@@ -1,14 +1,14 @@
 /* eslint-disable semi */
 'use strict';
-
 import { expect } from 'chai';
 import sinon from 'sinon';
 import proxyquire from 'proxyquire';
 
 const requestSpy = sinon.spy();
-const facebook = proxyquire('./index', {'request': requestSpy});
+const sendMessage = proxyquire('../util/utils', {'request': requestSpy});
+const facebook = proxyquire('./client', {'../util/utils': sendMessage});
 
-describe('MessengerClient', () => {
+describe('Client', () => {
   let client;
   const TEST_ID = 0;
   const TEST_TOKEN = 'TEST_TOKEN';
@@ -29,26 +29,23 @@ describe('MessengerClient', () => {
 
   beforeEach(() => {
     requestSpy.reset();
-    client = new facebook.Client(TEST_TOKEN);
+    client = new facebook.MessagingClient(TEST_TOKEN);
   });
 
-  describe('setGreetingMessage', () => {
-    const correctPayload = {
-      json: {
-        greeting: {
-          text: TEST_TEXT
+  describe('constructor', () => {
+    it('should create request with only access token given token no proxy', () => {
+      const correctPayload = {
+        method: 'GET',
+        qs: {
+          access_token: 'TEST_TOKEN',
+          fields: 'TEST_TEXT'
         },
-        setting_type: 'greeting'
-      },
-      method: 'POST',
-      qs: {
-        access_token: TEST_TOKEN
-      },
-      url: 'https://graph.facebook.com/v2.6/me/thread_settings'
-    };
+        url: `https://graph.facebook.com/v2.6/${TEST_ID}`
+      };
 
-    it('returns promise given no cb and generates correct request payload', () => {
-      const result = client.setGreetingMessage(TEST_TEXT);
+      client = new facebook.MessagingClient(TEST_TOKEN);
+
+      const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
 
       expect(typeof result.then).to.be.equal('function');
       expect(typeof result.catch).to.be.equal('function');
@@ -56,35 +53,20 @@ describe('MessengerClient', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
 
-    it('given cb no promise returned and correct payload generated', () => {
-      let result = client.setGreetingMessage(TEST_TEXT, TEST_CALLBACK);
+    it('should create request with access token and proxy', () => {
+      const correctPayload = {
+        method: 'GET',
+        qs: {
+          access_token: 'TEST_TOKEN',
+          fields: `${TEST_TEXT}`
+        },
+        url: `https://graph.facebook.com/v2.6/${TEST_ID}`,
+        proxy: `http://${TEST_TEXT}:${TEST_TEXT}`
+      };
 
-      expect(typeof result).to.equal('undefined');
-      sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload);
-    });
-  });
+      client = new facebook.MessagingClient(TEST_TOKEN, {hostname: TEST_TEXT, port: TEST_TEXT});
 
-  describe('setGetStartedAction', () => {
-    const correctPayload = {
-      json: {
-        call_to_actions: [
-          {
-            payload: TEST_TEXT
-          }
-        ],
-        setting_type: 'call_to_actions',
-        thread_state: 'new_thread'
-      },
-      method: 'POST',
-      qs: {
-        access_token: TEST_TOKEN
-      },
-      url: 'https://graph.facebook.com/v2.6/me/thread_settings'
-    };
-
-    it('returns promise given no cb and generates correct request payload', () => {
-      const result = client.setGetStartedAction(TEST_TEXT);
+      const result = client.getUserProfile(TEST_ID, [TEST_TEXT]);
 
       expect(typeof result.then).to.be.equal('function');
       expect(typeof result.catch).to.be.equal('function');
@@ -92,49 +74,19 @@ describe('MessengerClient', () => {
       sinon.assert.calledWith(requestSpy, correctPayload);
     });
 
-    it('given cb no promise returned and correct payload generated', () => {
-      const result = client.setGetStartedAction(TEST_TEXT, TEST_CALLBACK);
-
-      expect(typeof result).to.equal('undefined');
-      sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload);
-    });
-  });
-
-  describe('setPersistentMenu', () => {
-    const correctPayload = {
-      json: {
-        persistent_menu: [
-          {
-            call_to_actions: [TEST_TEXT],
-            locale: 'default'
-          }
-        ],
-        setting_type: 'call_to_actions',
-        thread_state: 'existing_thread'
-      },
-      method: 'POST',
-      qs: {
-        access_token: TEST_TOKEN
-      },
-      url: 'https://graph.facebook.com/v2.6/me/messenger_profile'
-    };
-
-    it('returns promise given no cb and generates correct request payload', () => {
-      const result = client.setPersistentMenu([TEST_TEXT]);
-
-      expect(typeof result.then).to.be.equal('function');
-      expect(typeof result.catch).to.be.equal('function');
-      sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload);
+    it('throw error given bad proxy object', () => {
+      expect(() => new facebook.MessagingClient(TEST_TOKEN, TEST_TEXT)).to.throw();
+      sinon.assert.notCalled(requestSpy);
     });
 
-    it('given cb no promise returned and correct payload generated', () => {
-      const result = client.setPersistentMenu([TEST_TEXT], TEST_CALLBACK);
+    it('throw error given bad proxy object properties', () => {
+      expect(() => new facebook.MessagingClient(TEST_TOKEN, {host: TEST_TEXT, port: TEST_TEXT})).to.throw();
+      sinon.assert.notCalled(requestSpy);
+    });
 
-      expect(typeof result).to.equal('undefined');
-      sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload);
+    it('throw error given bad proxy object properties', () => {
+      expect(() => new facebook.MessagingClient(TEST_TOKEN, {hostname: TEST_TEXT, prt: TEST_TEXT})).to.throw();
+      sinon.assert.notCalled(requestSpy);
     });
   });
 
@@ -142,7 +94,7 @@ describe('MessengerClient', () => {
     const correctPayload = {
       method: 'GET',
       qs: {
-        access_token: TEST_TOKEN,
+        access_token: 'TEST_TOKEN',
         fields: `${TEST_TEXT},${TEST_TEXT}`
       },
       url: `https://graph.facebook.com/v2.6/${TEST_ID}`
@@ -178,7 +130,7 @@ describe('MessengerClient', () => {
       },
       method: 'POST',
       qs: {
-        access_token: TEST_TOKEN
+        access_token: 'TEST_TOKEN'
       },
       url: 'https://graph.facebook.com/v2.6/me/messages'
     };
@@ -189,7 +141,7 @@ describe('MessengerClient', () => {
       expect(typeof result.then).to.be.equal('function');
       expect(typeof result.catch).to.be.equal('function');
       sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload)
+      sinon.assert.calledWith(requestSpy, correctPayload);
     });
 
     it('given cb no promise returned and proper request payload generated', () => {
@@ -197,7 +149,7 @@ describe('MessengerClient', () => {
 
       expect(result).to.equal(undefined);
       sinon.assert.calledOnce(requestSpy);
-      sinon.assert.calledWith(requestSpy, correctPayload)
+      sinon.assert.calledWith(requestSpy, correctPayload);
     });
   });
 
@@ -219,7 +171,7 @@ describe('MessengerClient', () => {
       },
       method: 'POST',
       qs: {
-        access_token: TEST_TOKEN
+        access_token: 'TEST_TOKEN'
       },
       url: 'https://graph.facebook.com/v2.6/me/messages'
     };
@@ -261,7 +213,7 @@ describe('MessengerClient', () => {
       },
       method: 'POST',
       qs: {
-        access_token: TEST_TOKEN
+        access_token: 'TEST_TOKEN'
       },
       url: 'https://graph.facebook.com/v2.6/me/messages'
     };
@@ -302,7 +254,7 @@ describe('MessengerClient', () => {
       },
       method: 'POST',
       qs: {
-        access_token: TEST_TOKEN
+        access_token: 'TEST_TOKEN'
       },
       url: 'https://graph.facebook.com/v2.6/me/messages'
     };
@@ -338,7 +290,7 @@ describe('MessengerClient', () => {
       },
       method: 'POST',
       qs: {
-        access_token: TEST_TOKEN
+        access_token: 'TEST_TOKEN'
       },
       url: 'https://graph.facebook.com/v2.6/me/messages'
     };
@@ -370,7 +322,7 @@ describe('MessengerClient', () => {
         },
         method: 'POST',
         qs: {
-          access_token: TEST_TOKEN
+          access_token: 'TEST_TOKEN'
         },
         url: 'https://graph.facebook.com/v2.6/me/messages'
       };
