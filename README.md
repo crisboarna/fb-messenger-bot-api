@@ -164,6 +164,21 @@ router.get('/api/webhook',facebook.ValidateWebhook.validate);
 ```
 Example based on usage with Express Router, can use any other middleware which passes in the req and response objects.
 Assumes verification token set under `process.env.FB_VERIFICATION_TOKEN`.
+
+Alternatively, if you want to pass in your set token in a different manner or under different name you can use 
+```javascript
+ValidateWebhook.validateWithToken(req, res, <TOKEN>);
+```
+
+This allows you to obtain the value as you wish and still use it as above with the help of currying.
+```javascript
+...
+const validateWebhook = function validateWebhook(token) {
+  return (req, res) => facebook.ValidateWebhook.validateWithToken(req, res, token);
+}
+const validator = validateWebhook(<TOKEN>);
+router.get('/api/webhook/',validator);
+```
 ## Complete example
 ```javascript
 const router = require('express').Router();
