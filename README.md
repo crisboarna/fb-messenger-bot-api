@@ -55,11 +55,11 @@ const facebook = require('fb-messenger-bot-api');
 ## Sending Messages
 Initialize
 ```javascript
-const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
+const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN);
 ```
 Using proxy
 ```javascript
-const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
 ```
 Defaults to `http` if no protocol provided
 ### Text Message
@@ -183,7 +183,7 @@ router.get('/api/webhook/',validator);
 ```javascript
 const router = require('express').Router();
 const facebook = require('fb-messenger-bot-api');
-const client = new facebook.MessagingClient(process.env.PAGE_ACCESS_TOKEN);
+const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN);
 ...
 router.get('/api/webhook',facebook.ValidateWebhook.validate);
 ...
