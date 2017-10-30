@@ -26,7 +26,7 @@ npm install fb-messenger-bot-api
   * [Image Message](#image-message)
   * [Buttons Message](#buttons-message)
   * [Quick Reply Message](#quick-reply-message)
-  * [Generic Template List (Horizontal Scroll List)](#generic-template-list-(-horizontal-scroll-list-))
+  * [Generic Template List ( Horizontal Scroll List)](#generic-template-list-(-horizontal-scroll-list-))
   * [List Message ( Vertical Scroll List)](#list-message-(-vertical-scroll-list-))
   * [Mark as Seen](#mark-as-seen)
   * [Toggle Writing Bubble](#toggle-writing-bubble)
@@ -35,6 +35,9 @@ npm install fb-messenger-bot-api
   * [Setting Greeting Message](#setting-greeting-message)
   * [Setting Get Started Button](#setting-get-started-button)
   * [Setting Persistent Menu](#setting-persistent-menu)
+* [Sending Facebook Page Posts](#sending-facebook-page-posts)
+  * [Page Image Posts](#page-image-posts)
+  * [Page Link Posts](#page-link-posts)
 * [Validating Facebook Webhook](#validating-facebook-webhook)
 * [Complete Example](#complete-example)
 * [Creating Facebook App](#creating-facebook-app)
@@ -89,14 +92,14 @@ client.sendQuickReplyMessage(senderId, <TEXT>, [<QUICK_REPLIES>])
 ```
 [Quick Reply format](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies)
 
-### Generic Template Message ( Horizontal Scroll List)
+### Generic Template Message ( Horizontal Scroll List )
 ```javascript
 client.sendGenericTemplate(senderId, [ELEMENTS])
     .then((result) => ...)
 ```
 [Generic Template element format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)
 
-### List Message ( Vertical Scroll List)
+### List Message ( Vertical Scroll List )
 ```javascript
 client.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS])
     .then((result) => ...)
@@ -155,6 +158,41 @@ client.setPersistentMenu(senderId, [<MENU_ENTRIES>])
 ```
 This is a burger menu appearing next to the chat input field where users can click and get direct interaction shortcuts to specific functionality of the bot.
 [Persistent menu format](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu)
+
+## Sending Facebook Page Posts
+Initialize
+```javascript
+const page = new facebook.Page(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN);
+```
+Using proxy
+```javascript
+const page = new facebook.Page(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+```
+Defaults to `http` if no protocol provided
+
+Requires a never expiring `publishing_actions` token that can be obtained by following [this](https://www.rocketmarketinginc.com/blog/get-never-expiring-facebook-page-access-token/ ) guide.
+
+### Page Image Posts
+```javascript
+page.imageUrl(`<URL>`).imageCaption(`<CAPTION>`).sendImage(`<CALLBACK>`);
+```
+
+`<URL>` is the url of the image being posted
+
+`<CAPTION>` is the text you want on top of the image
+
+`<CALLBACK>` is optional callback otherwise promise is returned
+
+### Page Link Posts
+```javascript
+page.postUrl(`<URL>`).postMessage(`<MESSAGE>`).sendPost(`<CALLBACK>`);
+```
+
+`<URL>` is the url of the link being posted
+
+`<MESSAGE>` is the text you want on top of the link
+
+`<CALLBACK>` is optional callback otherwise promise is returned
 
 ## Validating Facebook Webhook
 ```javascript
