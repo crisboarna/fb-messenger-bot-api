@@ -51,6 +51,7 @@
     "codecov.io": "0.1.6",
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.1.0",
+    "greenkeeper-lockfile": "1.12.0",
     "husky": "0.14.3",
     "mocha": "4.0.1",
     "nyc": "11.3.0",
