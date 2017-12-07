@@ -1,18 +1,23 @@
+sudo: false
 language: node_js
 cache:
   directories:
     - ~/.npm
     - node_modules
+node_js:
+  - "8"
 notifications:
   email: false
-node_js:
-  - '8'
+before_install:
+  - greenkeeper-lockfile-update
 before_script:
-  - npm prune
+  - greenkeeper-lockfile-update
 script:
   - npm test
   - npm run check-coverage
   - npm run build
+after_script:
+  - greenkeeper-lockfile-upload
 after_success:
   - npm run report-coverage
   - npm run semantic-release
