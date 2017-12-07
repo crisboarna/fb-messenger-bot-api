@@ -9,7 +9,7 @@ node_js:
 notifications:
   email: false
 before_install:
-  - greenkeeper-lockfile-update
+  - npm install -g greenkeeper-lockfile@1
 before_script:
   - greenkeeper-lockfile-update
 script:
