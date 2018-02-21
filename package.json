@@ -57,9 +57,9 @@
     "nyc": "11.4.1",
     "proxyquire": "1.8.0",
     "rimraf": "2.6.2",
-    "standard": "11.0.0"
+    "standard": "11.0.0",
     "sinon": "4.3.0",
-    "semantic-release": "12.4.1",
+    "semantic-release": "12.4.1"
   },
   "dependencies": {
     "request": "2.83.0"
