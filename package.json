@@ -59,7 +59,7 @@
     "rimraf": "2.6.2",
     "standard": "11.0.1",
     "sinon": "4.4.2",
-    "semantic-release": "12.4.1"
+    "semantic-release": "15.4.1"
   },
   "dependencies": {
     "request": "2.84.0"
