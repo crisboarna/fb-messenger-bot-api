@@ -19,6 +19,7 @@ npm install fb-messenger-bot-api
 ```
 
 ## Table of Contents
+* [Documentation](#documentation)
 * [Features](#features)
 * [Setup](#setup)
 * [Sending Messages](#sending-messages)
@@ -45,6 +46,10 @@ npm install fb-messenger-bot-api
 * [Complete Example](#complete-example)
 * [Creating Facebook App](#creating-facebook-app)
 * [Contributing](#contributing)
+
+## Documentation
+Documentation can be found [here](https://crisboarna.github.io/fb-messenger-bot-api/)
+
 
 ## Features
 * Most of Send API support (
