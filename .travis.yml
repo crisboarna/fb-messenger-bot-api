@@ -12,13 +12,20 @@ before_script:
   - greenkeeper-lockfile-update
 script:
   - npm test
-  - npm run check-coverage
+  - npm run tslint
   - npm run build
+  - npm run generate-docs
 after_script:
   - greenkeeper-lockfile-upload
 after_success:
   - npm run report-coverage
-  - npm run semantic-release
+  - npm run travis-deploy-once "npm run semantic-release"
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
+deploy:
+  provider: pages
+  name: crisboarna
+  skip_cleanup: true
+  github_token: $GH_TOKEN
+  local_dir: docs
