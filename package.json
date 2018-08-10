@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@types/request": "2.47.0",
-    "request": "2.87.0"
+    "request": "2.88.0"
   },
   "devDependencies": {
     "@types/jest": "22.2.3",
