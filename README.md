@@ -3,14 +3,15 @@
 [![version](https://img.shields.io/npm/v/fb-messenger-bot-api.svg)](http://npm.im/fb-messenger-bot-api)
 [![travis build](https://img.shields.io/travis/crisboarna/fb-messenger-bot-api.svg)](https://travis-ci.org/crisboarna/fb-messenger-bot-api)
 [![codecov coverage](https://img.shields.io/codecov/c/github/crisboarna/fb-messenger-bot-api.svg)](https://codecov.io/gh/crisboarna/fb-messenger-bot-api)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d87ae38dea34aa09d0daa0ab81b81cd)](https://www.codacy.com/app/crisboarna/fb-messenger-bot-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=crisboarna/fb-messenger-bot-api&amp;utm_campaign=Badge_Grade)
 [![dependency status](https://img.shields.io/david/crisboarna/fb-messenger-bot-api.svg)](https://david-dm.org/crisboarna/fb-messenger-bot-api)
+[![Known Vulnerabilities](https://snyk.io/test/github/crisboarna/fb-messenger-bot-api/badge.svg?targetFile=package.json)](https://snyk.io/test/github/crisboarna/fb-messenger-bot-api?targetFile=package.json)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d87ae38dea34aa09d0daa0ab81b81cd)](https://www.codacy.com/app/crisboarna/fb-messenger-bot-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=crisboarna/fb-messenger-bot-api&amp;utm_campaign=Badge_Grade)
 [![MIT License](https://img.shields.io/npm/l/fb-messenger-bot-api.svg)](http://opensource.org/licenses/MIT)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](http://commitizen.github.io/cz-cli/)
 ![stability-stable](https://img.shields.io/badge/stability-stable-green.svg)
 [![Greenkeeper](https://badges.greenkeeper.io/crisboarna/fb-messenger-bot-api.svg)](https://greenkeeper.io/)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![code style](https://img.shields.io/badge/code%20style-airbnb-brightgreen.svg)](https://img.shields.io/badge/code%20style-airbnb-brightgreen.svg)
 
 ## Installation
 
@@ -19,6 +20,7 @@ npm install fb-messenger-bot-api
 ```
 
 ## Table of Contents
+* [Documentation](#documentation)
 * [Features](#features)
 * [Setup](#setup)
 * [Sending Messages](#sending-messages)
@@ -31,6 +33,7 @@ npm install fb-messenger-bot-api
   * [Mark as Seen](#mark-as-seen)
   * [Toggle Writing Bubble](#toggle-writing-bubble)
   * [User Profile](#user-profile)
+* [Incoming Message Parser](#incoming-message-parser)  
 * [Setting Messenger Profile](#setting-messenger-profile)
   * [Setting Greeting Message](#setting-greeting-message)
   * [Setting Get Started Button](#setting-get-started-button)
@@ -39,14 +42,23 @@ npm install fb-messenger-bot-api
   * [Page Image Posts](#page-image-posts)
   * [Page Link Posts](#page-link-posts)
 * [Validating Facebook Webhook](#validating-facebook-webhook)
-* [Complete Example](#complete-example)
+* [Complete Examples](#complete-example)
 * [Creating Facebook App](#creating-facebook-app)
 
+## Documentation
+You can find documentation [here](https://crisboarna.github.io/fb-messenger-bot-api/)
+
 ## Features
+* Near complete Typescript types for all incoming/outgoing Facebook Messaging API payloads & webhooks
+* Builders for all types of buttons/templates
+* Incoming Message Parser & Extractor
+* Webhook Validation logic 
+* Page posting
+* Profile interactions 
 * Promises and callback support on all functions, if no callback provided, promise returned, allows you to manage flow as you desire AND to <b>ensure message ordering</b><br />
 * Supports proxying
-* ES6+ code
-* Using latest Facebook API v2.10
+* Typescript code with exported types for every end-point input/output
+* Using latest Facebook API v3.1
 
 ## Setup
 
@@ -54,55 +66,92 @@ Import
 ```javascript
 const facebook = require('fb-messenger-bot-api');
 ```
+or
+```typescript
+import { FacebookMessagingAPIClient, etc... } from 'fb-messenger-bot-api';
+```
 
 ## Sending Messages
 Initialize
 ```javascript
-const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN);
+const messageClient = new facebook.FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN);
+```
+or
+```typescript
+const messageClient = new FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN);
 ```
 Using proxy
 ```javascript
-const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+const messageClient = new facebook.FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+```
+or
+```typescript
+const messageClient = new FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
 ```
 Defaults to `http` if no protocol provided
 ### Text Message
 
 ```javascript
-client.sendTextMessage(senderId, <MESSAGE>)
+messageClient.sendTextMessage(senderId, <MESSAGE>)
     .then((result) => ...)
 ```
+or
+```typescript
+await messageClient.sentTextMessage(senderId, <MESSAGE>);
+```
+
 ### Image Message
 ```javascript
-client.sendImageMessage(senderId, <IMAGE_URL>)
+messageClient.sendImageMessage(senderId, <IMAGE_URL>)
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.sendImageMessage(senderId, <IMAGE_URL>)
 ```
 This method will have the image cached by facebook so every receiver after the first will get it quickly.
 
 ### Buttons Message
 ```javascript
-client.sendButtonsMessage(senderId, <BUTTONS TEXT> [<ARRAY OF BUTTONS>])
+messageClient.sendButtonsMessage(senderId, <BUTTONS TEXT> [<ARRAY OF BUTTONS>])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.sendButtonsMessage(senderId, <BUTTONS TEXT> [<ARRAY OF BUTTONS>])
 ```
 [Buttons format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/button)
 
 ### Quick Reply Message
 ```javascript
-client.sendQuickReplyMessage(senderId, <TEXT>, [<QUICK_REPLIES>])
+messageClient.sendQuickReplyMessage(senderId, <TEXT>, [<QUICK_REPLIES>])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.sendQuickReplyMessage(senderId, <TEXT>, [<QUICK_REPLIES>])
 ```
 [Quick Reply format](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies)
 
 ### Generic Template Message ( Horizontal Scroll List )
 ```javascript
-client.sendGenericTemplate(senderId, [ELEMENTS])
+messageClient.sendGenericTemplate(senderId, [ELEMENTS])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.sendGenericTemplate(senderId, [ELEMENTS])
 ```
 [Generic Template element format](https://developers.facebook.com/docs/messenger-platform/send-messages/template/generic)
 
 ### List Message ( Vertical Scroll List )
 ```javascript
-client.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS])
+messageClient.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS])
 ```
 `firstElementStyle` is optional. If not provided defaults to `large`
 
@@ -110,51 +159,80 @@ client.sendListMessage(senderId, [ELEMENTS], <firstElementStyle>, [FINAL_BUTTONS
 
 ### Mark as Seen
 ```javascript
-client.markSeen(senderId);
+messageClient.markSeen(senderId);
 ```
 As per all methods, callback can be provided. If no callback provided returns promise. Recommended to send and continue processing without waiting for reply.
 
 ### Toggle writing bubble
 ```javascript
-client.toggleTyping(senderId, <true/false>);
+messageClient.toggleTyping(senderId, <true/false>);
 ```
 As per all methods, callback can be provided. If no callback provided returns promise. Recommended to send and continue processing without waiting for reply.
 Defaults to `false` if no boolean parameter provided.
 
+
 ### User Profile
 ```javascript
-client.getUserProfile(senderId,[<PROPERTIES>])
+messageClient.getUserProfile(senderId,[<PROPERTIES>])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await messageClient.getUserProfile(senderId,[<PROPERTIES>])
 ```
 Valid properties: `first_name`,`last_name`,`profile_pic`,`locale`,`timezone`,`gender`,`is_payment_enabled`,`last_ad_referral`
 If none are given defaults to `first_name` only.
 
+## Incoming Message Parser
+Extracts all relevant & known message types that can be found [here](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events). Returns array with all objects of interest. Left flexibility to user to filter out message types of interest per use case instead of returning dictionary object with each message type as a separate list for optional performance saving in case of usage on time sensitive platforms (AWS Lambda, AF, GCF, etc).
+
+```typescript
+import {FacebookMessageParser} from 'fb-messenger-bot-api';
+const messages = FacebookMessageParser.parsePayload(incomingPayload);
+```
+
 ## Setting Messenger Profile
 Initialize
 ```javascript
-const client = new facebook.Profile(process.env.PAGE_ACCESS_TOKEN);
+const profileClient = new facebook.FacebookProfileAPIClient(process.env.PAGE_ACCESS_TOKEN);
+```
+or
+```typescript
+import {Profile} from 'fb-messenger-bot-api';
+const profileClient = new FacebookProfileAPIClient(process.env.PAGE_ACCESS_TOKEN);
 ```
 Using proxy
 ```javascript
-const client = new facebook.Profile(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+const profileClient = new facebook.FacebookProfileAPIClient(process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
 ```
 ### Setting Greeting Message
 ```javascript
-client.setGreetingMessage('Message that will be visible first thing when opening chat window with your bot/page')
+profileClient.setGreetingMessage('Message that will be visible first thing when opening chat window with your bot/page')
 .then((result) => ...)
 ```
-
+or
+```typescript
+const result = await profileClient.setGreetingMessage('Message that will be visible first thing when opening chat window with your bot/page');
+```
 ### Setting Get Started button
 ```javascript
-client.setGetStartedAction(senderId, payload)
+profileClient.setGetStartedAction(senderId, payload)
     .then((result) => ...)
+```
+or
+```typescript
+const result = await profileClient.setGetStartedAction(senderId, payload)
 ```
 `payload` is the value that will be first sent when new user sends first message, once per user interaction
 
 ### Setting Persistent Menu
 ```javascript
-client.setPersistentMenu(senderId, [<MENU_ENTRIES>])
+profileClient.setPersistentMenu(senderId, [<MENU_ENTRIES>])
     .then((result) => ...)
+```
+or
+```typescript
+const result = await profileClient.setPersistentMenu(senderId, [<MENU_ENTRIES>])
 ```
 This is a burger menu appearing next to the chat input field where users can click and get direct interaction shortcuts to specific functionality of the bot.
 [Persistent menu format](https://developers.facebook.com/docs/messenger-platform/reference/messenger-profile-api/persistent-menu)
@@ -162,11 +240,16 @@ This is a burger menu appearing next to the chat input field where users can cli
 ## Sending Facebook Page Posts
 Initialize
 ```javascript
-const page = new facebook.Page(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN);
+const pageClient = new facebook.FacebookPageAPIClient(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN);
+```
+or
+```typescript
+import {FacebookPageAPIClient} from 'fb-messenger-bot-api';
+const pageClient = new FacebookPageAPIClient(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN)
 ```
 Using proxy
 ```javascript
-const page = new facebook.Page(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
+const pageClient = new facebook.FacebookPageAPIClient(process.env.PAGE_ID, process.env.PAGE_ACCESS_TOKEN, { hostname:process.env.PROXY_HOST, port: process.env.PROXY_PORT });
 ```
 Defaults to `http` if no protocol provided
 
@@ -174,7 +257,7 @@ Requires a never expiring `publishing_actions` token that can be obtained by fol
 
 ### Page Image Posts
 ```javascript
-page.imageUrl(`<URL>`).imageCaption(`<CAPTION>`).sendImage(`<CALLBACK>`);
+pageClient.imageUrl(`<URL>`).imageCaption(`<CAPTION>`).sendImage(`<CALLBACK>`);
 ```
 
 `<URL>` is the url of the image being posted
@@ -185,7 +268,7 @@ page.imageUrl(`<URL>`).imageCaption(`<CAPTION>`).sendImage(`<CALLBACK>`);
 
 ### Page Link Posts
 ```javascript
-page.postUrl(`<URL>`).postMessage(`<MESSAGE>`).sendPost(`<CALLBACK>`);
+pageClient.postUrl(`<URL>`).postMessage(`<MESSAGE>`).sendPost(`<CALLBACK>`);
 ```
 
 `<URL>` is the url of the link being posted
@@ -217,27 +300,57 @@ const validateWebhook = function validateWebhook(token) {
 const validator = validateWebhook(<TOKEN>);
 router.get('/api/webhook/',validator);
 ```
+
 ## Complete example
 ```javascript
 const router = require('express').Router();
 const facebook = require('fb-messenger-bot-api');
-const client = new facebook.Client(process.env.PAGE_ACCESS_TOKEN);
+const messagingClient = new facebook.FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN);
+const messageParser = facebook.FacebookMessageParser;
 ...
 router.get('/api/webhook',facebook.ValidateWebhook.validate);
+router.post('/api/webhook', (req, res) => {
+    const incomingMessages = messageParser.parsePayload(req.body);  
+    ...
+    messagingClient.markSeen(senderId)
+        .then(() => client.toggleTyping(senderId,true))
+        .catch((err) => console.log(error));
+    ...
+    //promise based reaction on message send confirmation
+    messagingClient.sendTextMessage(senderId, 'Hello')
+        .then((result) => console.log(`Result sent with: ${result}`));
+    ...
+    //callback based reaction on message confirmation
+    messagingClient.sendTextMessage(senderId, 'Hello',(result) => console.log(`Result sent with: ${result}`));
+    ...
+    //silent message sending
+    messagingClient.sendTextMessage(senderId,'Hello');
+})
+```
+or
+```typescript
+import {FacebookMessagingAPIClient, ValidateWebhook, FacebookMessageParser} from 'fb-messenger-bot-api';
+import {Router} from 'express';
 ...
-client.markSeen(senderId)
-  .then(() => client.toggleTyping(senderId,true))
-  .catch((err) => console.log(error));
-...
-//promise based reaction on message send confirmation
-client.sendTextMessage(senderId, 'Hello')
-    .then((result) => console.log(`Result sent with: ${result}`));
-...
-//callback based reaction on message confirmation
-client.sendTextMessage(senderId, 'Hello',(result) => console.log(`Result sent with: ${result}`));
-...
-//silent message sending
-client.sendTextMessage(senderId,'Hello');
+router.get('/api/webhook',facebook.ValidateWebhook.validate);
+router.post('/api/webhook', (req, res) => {
+    try {
+    const incomingMessages = messageParser.parsePayload(req.body);  
+        ...
+        await messagingClient.markSeen(senderId);
+        await messagingClient.toggleTyping(senderId,true));
+        ...
+        //promise based reaction on message send confirmation
+        const result = await messagingClient.sendTextMessage(senderId, 'Hello');
+        console.log(`Result sent with: ${result}`));
+        ...
+    } catch(e){...}
+    //callback based reaction on message confirmation
+    messagingClient.sendTextMessage(senderId, 'Hello',(result) => console.log(`Result sent with: ${result}`));
+    ...
+    //silent message sending
+    messagingClient.sendTextMessage(senderId,'Hello');
+});
 ```
 
 ## Creating Facebook app

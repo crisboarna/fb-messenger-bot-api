@@ -1,0 +1,56 @@
+import {FacebookMessageParser} from "../../src/client/FacebookMessageParser";
+
+describe('FacebookMessageParser', () => {
+    describe('parsePayload', () => {
+        it('given invalid payload, return null', () => {
+            expect(FacebookMessageParser.parsePayload({})).toEqual(null);
+        });
+
+        it('given object property of incorrect value, return null', () => {
+            expect(FacebookMessageParser.parsePayload({object: 'TEST'})).toEqual(null);
+        });
+
+        it('given correct object property with no entry, return null', () => {
+            expect(FacebookMessageParser.parsePayload({object: 'page'})).toEqual(null);
+        });
+
+        it('given correct object property and entry with no deep entry, return correct result', () => {
+            const INPUT_PAYLOAD = {object: 'page', entry: [[{test:1}]]};
+            expect(FacebookMessageParser.parsePayload(INPUT_PAYLOAD)).toEqual([{test:1}]);
+
+        });
+
+        it('given correct object property and entry, return flattened array', () => {
+            const OBJECT_1 = {
+                sender: {
+                    id: '1'
+                },
+                recipient: {
+                    id: '1'
+                },
+                timestamp: 11
+            };
+
+            const OBJECT_2 = {
+                sender: {
+                    id: '2'
+                },
+                recipient: {
+                    id: '2'
+                },
+                timestamp: 22
+            };
+
+            const ENTRY_OBJECT_1 = {messaging: [OBJECT_1]};
+
+            const ENTRY_OBJECT_2 = {messaging: []};
+
+            const ENTRY_OBJECT_3 = {messaging: [OBJECT_1, OBJECT_2]};
+
+            const INPUT_PAYLOAD = {object: 'page', entry: [ENTRY_OBJECT_1, ENTRY_OBJECT_2, ENTRY_OBJECT_3]};
+            const EXPECTED_PAYLOAD = [OBJECT_1, OBJECT_1, OBJECT_2];
+
+            expect(FacebookMessageParser.parsePayload(INPUT_PAYLOAD)).toEqual(EXPECTED_PAYLOAD);
+        });
+    });
+});
