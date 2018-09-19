@@ -9,26 +9,26 @@ import { ButtonTemplateBuilder } from '../../builders/templates';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/button
  */
 export class ButtonTemplate extends AbstractMessageTemplate implements IButtonTemplate {
-  private _buttons: IButton[];
-  private _text: string;
-  private _sharable?: boolean;
+  readonly buttons: IButton[];
+  readonly text: string;
+  readonly sharable?: boolean;
 
   constructor(builder: ButtonTemplateBuilder) {
     super(builder.getTemplateType());
-    this._buttons = builder.getButtons();
-    this._text = builder.getText();
-    this._sharable = builder.getSharable();
+    this.buttons = builder.getButtons();
+    this.text = builder.getText();
+    this.sharable = builder.getSharable();
   }
 
-  get buttons(): IButton[] {
-    return this._buttons;
+  get Buttons(): IButton[] {
+    return this.buttons;
   }
 
-  get text(): string {
-    return this._text;
+  get Text(): string {
+    return this.text;
   }
 
-  get sharable(): boolean|undefined {
-    return this._sharable;
+  get Sharable(): boolean|undefined {
+    return this.sharable;
   }
 }

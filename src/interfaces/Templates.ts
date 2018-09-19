@@ -50,7 +50,6 @@ export interface IGenericTemplateElement {
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/generic
  */
 export interface IGenericTemplate extends IMessageTemplate {
-  sharable?: boolean;
   image_aspect_ratio?: string;
   elements: IGenericTemplateElement[];
 }

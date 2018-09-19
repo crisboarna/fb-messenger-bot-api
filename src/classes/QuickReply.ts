@@ -9,31 +9,31 @@ import { QuickReplyBuilder } from '../builders';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/send-api/quick-replies
  */
 export class QuickReply implements IQuickReply {
-  private _content_type: QUICK_REPLY_TYPE;
-  private _title?: string;
-  private _payload?: string|number;
-  private _image_url?: string;
+  readonly content_type: QUICK_REPLY_TYPE;
+  readonly title?: string;
+  readonly payload?: string|number;
+  readonly image_url?: string;
 
   public constructor(builder: QuickReplyBuilder) {
-    this._content_type = builder.getContentType();
-    this._title = builder.getTitle();
-    this._image_url = builder.getImageUrl();
-    this._payload = builder.getPayload();
+    this.content_type = builder.getContentType();
+    this.title = builder.getTitle();
+    this.image_url = builder.getImageUrl();
+    this.payload = builder.getPayload();
   }
 
-  get content_type(): QUICK_REPLY_TYPE {
-    return this._content_type;
+  get Content_type(): QUICK_REPLY_TYPE {
+    return this.content_type;
   }
 
-  get title(): string|undefined {
-    return this._title;
+  get Title(): string|undefined {
+    return this.title;
   }
 
-  get payload(): string | number|undefined {
-    return this._payload;
+  get Payload(): string | number|undefined {
+    return this.payload;
   }
 
-  get image_url(): string|undefined {
-    return this._image_url;
+  get Image_url(): string|undefined {
+    return this.image_url;
   }
 }

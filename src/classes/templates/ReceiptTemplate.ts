@@ -14,74 +14,74 @@ import { ReceiptTemplateBuilder } from '../../builders/templates';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/receipt
  */
 export class ReceiptTemplate extends AbstractMessageTemplate implements IReceiptTemplate {
-  private _address?: IReceiptAddressProperty;
-  private _adjustments?: IReceiptAdjustmentProperty;
-  private _currency: string;
-  private _elements?: IReceiptElements;
-  private _merchant_name?: string;
-  private _order_number: string;
-  private _payment_method: string;
-  private _recipient_name: string;
-  private _sharable?: boolean;
-  private _summary: IReceiptSummaryProperty;
-  private _timestamp?: string;
+  readonly address?: IReceiptAddressProperty;
+  readonly adjustments?: IReceiptAdjustmentProperty;
+  readonly currency: string;
+  readonly elements?: IReceiptElements;
+  readonly merchant_name?: string;
+  readonly order_number: string;
+  readonly payment_method: string;
+  readonly recipient_name: string;
+  readonly sharable?: boolean;
+  readonly summary: IReceiptSummaryProperty;
+  readonly timestamp?: string;
 
   constructor(builder: ReceiptTemplateBuilder) {
     super(builder.getTemplateType());
-    this._address = builder.getAddress();
-    this._adjustments = builder.getAdjustments();
-    this._currency = builder.getCurrency();
-    this._elements = builder.getElements();
-    this._merchant_name = builder.getMerchantName();
-    this._order_number = builder.getOrderNumber();
-    this._payment_method = builder.getPaymenMmethod();
-    this._recipient_name = builder.getRecipientName();
-    this._sharable = builder.getSharable();
-    this._summary = builder.getSummary();
-    this._timestamp = builder.getTimestamp();
+    this.address = builder.getAddress();
+    this.adjustments = builder.getAdjustments();
+    this.currency = builder.getCurrency();
+    this.elements = builder.getElements();
+    this.merchant_name = builder.getMerchantName();
+    this.order_number = builder.getOrderNumber();
+    this.payment_method = builder.getPaymenMmethod();
+    this.recipient_name = builder.getRecipientName();
+    this.sharable = builder.getSharable();
+    this.summary = builder.getSummary();
+    this.timestamp = builder.getTimestamp();
   }
 
-  get address(): IReceiptAddressProperty|undefined {
-    return this._address;
+  get Address(): IReceiptAddressProperty|undefined {
+    return this.address;
   }
 
-  get adjustments(): IReceiptAdjustmentProperty|undefined {
-    return this._adjustments;
+  get Adjustments(): IReceiptAdjustmentProperty|undefined {
+    return this.adjustments;
   }
 
-  get currency(): string {
-    return this._currency;
+  get Currency(): string {
+    return this.currency;
   }
 
-  get elements(): IReceiptElements|undefined {
-    return this._elements;
+  get Elements(): IReceiptElements|undefined {
+    return this.elements;
   }
 
-  get merchant_name(): string|undefined {
-    return this._merchant_name;
+  get Merchant_name(): string|undefined {
+    return this.merchant_name;
   }
 
-  get order_number(): string {
-    return this._order_number;
+  get Order_number(): string {
+    return this.order_number;
   }
 
-  get payment_method(): string {
-    return this._payment_method;
+  get Payment_method(): string {
+    return this.payment_method;
   }
 
-  get recipient_name(): string {
-    return this._recipient_name;
+  get Recipient_name(): string {
+    return this.recipient_name;
   }
 
-  get sharable(): boolean|undefined {
-    return this._sharable;
+  get Sharable(): boolean|undefined {
+    return this.sharable;
   }
 
-  get summary(): IReceiptSummaryProperty {
-    return this._summary;
+  get Summary(): IReceiptSummaryProperty {
+    return this.summary;
   }
 
-  get timestamp(): string|undefined {
-    return this._timestamp;
+  get Timestamp(): string|undefined {
+    return this.timestamp;
   }
 }

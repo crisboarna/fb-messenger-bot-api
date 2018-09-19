@@ -9,26 +9,26 @@ import { GenericTemplateBuilder } from '../../builders/templates';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/generic
  */
 export class GenericTemplate extends AbstractMessageTemplate implements IGenericTemplate {
-  private _elements: IGenericTemplateElement[];
-  private _image_aspect_ratio?: string;
-  private _sharable?: boolean;
+  readonly elements: IGenericTemplateElement[];
+  readonly image_aspect_ratio?: string;
+  readonly sharable?: boolean;
 
   constructor(builder: GenericTemplateBuilder) {
     super(builder.getTemplateType());
-    this._elements = builder.getElements();
-    this._image_aspect_ratio = builder.getImageAspectRatio();
-    this._sharable = builder.getSharable();
+    this.elements = builder.getElements();
+    this.image_aspect_ratio = builder.getImageAspectRatio();
+    this.sharable = builder.getSharable();
   }
 
-  get elements(): IGenericTemplateElement[] {
-    return this._elements;
+  get Elements(): IGenericTemplateElement[] {
+    return this.elements;
   }
 
-  get image_aspect_ratio(): string|undefined {
-    return this._image_aspect_ratio;
+  get Image_aspect_ratio(): string|undefined {
+    return this.image_aspect_ratio;
   }
 
-  get sharable(): boolean|undefined {
-    return this._sharable;
+  get Sharable(): boolean|undefined {
+    return this.sharable;
   }
 }

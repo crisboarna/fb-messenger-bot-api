@@ -9,20 +9,20 @@ import { MediaTemplateBuilder } from '../../builders/templates/MediaTemplateBuil
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/media
  */
 export class MediaTemplate extends AbstractMessageTemplate implements IMediaTemplate {
-  private _elements: IMediaTemplateElement[];
-  private _sharable?: boolean;
+  readonly elements: IMediaTemplateElement[];
+  readonly sharable?: boolean;
 
   constructor(builder: MediaTemplateBuilder) {
     super(builder.getTemplateType());
-    this._elements = builder.getElements();
-    this._sharable = builder.getSharable();
+    this.elements = builder.getElements();
+    this.sharable = builder.getSharable();
   }
 
-  get elements(): IMediaTemplateElement[] {
-    return this._elements;
+  get Elements(): IMediaTemplateElement[] {
+    return this.elements;
   }
 
-  get sharable(): boolean|undefined {
-    return this._sharable;
+  get Sharable(): boolean|undefined {
+    return this.sharable;
   }
 }

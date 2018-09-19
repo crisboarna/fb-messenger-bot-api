@@ -10,32 +10,32 @@ import { LIST_TOP_ELEMENT_STYLE } from '../../enums';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/list
  */
 export class ListTemplate extends AbstractMessageTemplate implements IListTemplate{
-  private _buttons?: IButton[];
-  private _elements: IGenericTemplateElement[];
-  private _top_element_style?: LIST_TOP_ELEMENT_STYLE;
-  private _sharable?: boolean;
+  readonly buttons?: IButton[];
+  readonly elements: IGenericTemplateElement[];
+  readonly top_element_style?: LIST_TOP_ELEMENT_STYLE;
+  readonly sharable?: boolean;
 
   constructor(builder: ListTemplateBuilder) {
     super(builder.getTemplateType());
-    this._buttons = builder.getButtons();
-    this._elements = builder.getElements();
-    this._top_element_style = builder.getTopElementStyle();
-    this._sharable = builder.getSharable();
+    this.buttons = builder.getButtons();
+    this.elements = builder.getElements();
+    this.top_element_style = builder.getTopElementStyle();
+    this.sharable = builder.getSharable();
   }
 
-  get sharable(): boolean|undefined {
-    return this._sharable;
+  get Sharable(): boolean|undefined {
+    return this.sharable;
   }
 
-  get buttons(): IButton[]|undefined {
-    return this._buttons;
+  get Buttons(): IButton[]|undefined {
+    return this.buttons;
   }
 
-  get elements(): IGenericTemplateElement[] {
-    return this._elements;
+  get Elements(): IGenericTemplateElement[] {
+    return this.elements;
   }
 
-  get top_element_style(): LIST_TOP_ELEMENT_STYLE|undefined {
-    return this._top_element_style;
+  get Top_element_style(): LIST_TOP_ELEMENT_STYLE|undefined {
+    return this.top_element_style;
   }
 }

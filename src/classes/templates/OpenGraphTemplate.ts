@@ -9,14 +9,14 @@ import { OpenGraphTemplateBuilder } from '../../builders/templates';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/template/open-graph
  */
 export class OpenGraphTemplate extends AbstractMessageTemplate implements IOpenGraphTemplate {
-  private _elements: IOpenGraphElement[];
+  readonly elements: IOpenGraphElement[];
 
   constructor(builder: OpenGraphTemplateBuilder) {
     super(builder.getTemplateType());
-    this._elements = builder.getElements();
+    this.elements = builder.getElements();
   }
 
-  get elements(): IOpenGraphElement[] {
-    return this._elements;
+  get Elements(): IOpenGraphElement[] {
+    return this.elements;
   }
 }
