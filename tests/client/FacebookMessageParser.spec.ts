@@ -1,22 +1,22 @@
-import {FacebookMessageParser} from "../../src/client/FacebookMessageParser";
+import {FacebookMessageParser} from "../../src";
 
 describe('FacebookMessageParser', () => {
     describe('parsePayload', () => {
         it('given invalid payload, return null', () => {
-            expect(FacebookMessageParser.parsePayload({})).toEqual(null);
+            expect(FacebookMessageParser.parsePayload(<any>{})).toEqual(null);
         });
 
         it('given object property of incorrect value, return null', () => {
-            expect(FacebookMessageParser.parsePayload({object: 'TEST'})).toEqual(null);
+            expect(FacebookMessageParser.parsePayload(<any>{object: 'TEST'})).toEqual(null);
         });
 
         it('given correct object property with no entry, return null', () => {
-            expect(FacebookMessageParser.parsePayload({object: 'page'})).toEqual(null);
+            expect(FacebookMessageParser.parsePayload(<any>{object: 'page'})).toEqual(null);
         });
 
         it('given correct object property and entry with no deep entry, return correct result', () => {
             const INPUT_PAYLOAD = {object: 'page', entry: [[{test:1}]]};
-            expect(FacebookMessageParser.parsePayload(INPUT_PAYLOAD)).toEqual([{test:1}]);
+            expect(FacebookMessageParser.parsePayload(<any>INPUT_PAYLOAD)).toEqual([{test:1}]);
 
         });
 
@@ -50,7 +50,7 @@ describe('FacebookMessageParser', () => {
             const INPUT_PAYLOAD = {object: 'page', entry: [ENTRY_OBJECT_1, ENTRY_OBJECT_2, ENTRY_OBJECT_3]};
             const EXPECTED_PAYLOAD = [OBJECT_1, OBJECT_1, OBJECT_2];
 
-            expect(FacebookMessageParser.parsePayload(INPUT_PAYLOAD)).toEqual(EXPECTED_PAYLOAD);
+            expect(FacebookMessageParser.parsePayload(<any>INPUT_PAYLOAD)).toEqual(EXPECTED_PAYLOAD);
         });
     });
 });
