@@ -27,8 +27,9 @@ describe('FacebookMessagingAPIClient', () => {
             mockUtils.Utils.getProxyData = mockProxy;
 
             new Client(TEST_TOKEN);
-            expect(mockProxy).toBeCalled();
-            expect(mockProxy).toBeCalledWith({token: TEST_TOKEN}, undefined);
+
+            expect(mockProxy).toHaveBeenCalled();
+            expect(mockProxy).toHaveBeenCalledWith({token: TEST_TOKEN}, undefined);
             mockUtils.Utils.getProxyData = mockGetProxyData;
         });
     });
@@ -37,18 +38,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.markSeen(TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.markSeen(TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -56,35 +61,43 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb and no toggle value - default to off', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.toggleTyping(TEST_ID);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload as promise given no cb and specified value', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.toggleTyping(TEST_ID, true);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.toggleTyping(TEST_TEXT, true, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
 
         it('send correct payload with cb given cb and no value specified - using default value', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.toggleTyping(TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -92,18 +105,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendTextMessage(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendTextMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -111,18 +128,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendImageMessage(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendImageMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -130,18 +151,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendAudioMessage(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendAudioMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -149,18 +174,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendVideoMessage(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendVideoMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -169,18 +198,22 @@ describe('FacebookMessagingAPIClient', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_URL = 'http://www.testremoteurl.com/image.jpg';
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"is_reusable": true, "url": "http://www.testremoteurl.com/image.jpg"}, "type": "file"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendFileMessage(TEST_ID, TEST_URL);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "file"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendFileMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -188,18 +221,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendButtonsMessage(TEST_ID, TEST_TEXT, []);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendButtonsMessage(TEST_ID, TEST_TEXT, [], TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -207,18 +244,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendTemplateMessage(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendTemplateMessage(TEST_ID, TEST_TEXT, TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -226,18 +267,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"test": "TEST_TEXT"}, "type": "template"}, "quick_replies": []}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendQuickReplyMessage(TEST_ID, {type: ATTACHMENT_TYPE.TEMPLATE,payload: {test:TEST_TEXT}}, []);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"json": {"message": {"quick_replies": [], "text": "TEST_TEXT"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+
             testClient.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [], TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -245,18 +290,22 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct default payload as promise given incorrect fieldsArray parameter', () => {
             const testClient = new Client(TEST_TOKEN);
             const EXPECTED_PAYLOAD = {"method": "GET", "qs": {"fields": "first_name"}, "url": "https://graph.facebook.com/v3.1/TEST_ID"};
+
             testClient.getUserProfile(TEST_ID, TEST_TEXT);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('send correct payload with cb given cb and correct payload parameter', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
             const EXPECTED_PAYLOAD = {"method": "GET", "qs": {"fields": "first_name,last_name,birth_date"}, "url": "https://graph.facebook.com/v3.1/TEST_ID"};
+
             testClient.getUserProfile(TEST_ID,['first_name', 'last_name', 'birth_date'], TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 });

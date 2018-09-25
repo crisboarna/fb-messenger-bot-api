@@ -42,6 +42,8 @@ npm install fb-messenger-bot-api
   * [Page Image Posts](#page-image-posts)
   * [Page Link Posts](#page-link-posts)
 * [Validating Facebook Webhook](#validating-facebook-webhook)
+  * [Server Validation](#server-validation)
+  * [Lambda Validation](#lambda-validation)
 * [Complete Examples](#complete-example)
 * [Creating Facebook App](#creating-facebook-app)
 
@@ -278,29 +280,44 @@ pageClient.postUrl(`<URL>`).postMessage(`<MESSAGE>`).sendPost(`<CALLBACK>`);
 `<CALLBACK>` is optional callback otherwise promise is returned
 
 ## Validating Facebook Webhook
+### Server Validation
 ```javascript
 const facebook = require('fb-messenger-bot-api');
 const router = require('express').Router();
-router.get('/api/webhook',facebook.ValidateWebhook.validate);
+router.get('/api/webhook',(req, res) => facebook.ValidateWebhook.validateServer(req,res));
 ```
 Example based on usage with Express Router, can use any other middleware which passes in the req and response objects.
 Assumes verification token set under `process.env.FB_VERIFICATION_TOKEN`.
 
 Alternatively, if you want to pass in your set token in a different manner or under different name you can use 
 ```javascript
-ValidateWebhook.validateWithToken(req, res, <TOKEN>);
+ValidateWebhook.validateServer(req, res, <TOKEN>);
 ```
 
 This allows you to obtain the value as you wish and still use it as above with the help of currying.
 ```javascript
 ...
 const validateWebhook = function validateWebhook(token) {
-  return (req, res) => facebook.ValidateWebhook.validateWithToken(req, res, token);
+  return (req, res) => facebook.ValidateWebhook.validateServer(req, res, token);
 }
 const validator = validateWebhook(<TOKEN>);
 router.get('/api/webhook/',validator);
 ```
 
+### Lambda Validation
+Alternatively, you can use this when running on AWS Lambda to take advantage of the serverless paradigm as follows:
+
+```typescript
+import {ValidateWebhook} from 'fb-messenger-bot-api';
+const handler = (event, context, callback: Function) => {
+    ...
+    if(event.httpMethod === 'GET') {
+        ValidateWebhook.validateLambda(event, callback);
+    }
+    ...
+}
+```
+Both `validateLambda` and `validateServer` support passing in verification token as third parameter. Otherwise will check `process.env.FB_VERIFICATION_TOKEN` for value.
 ## Complete example
 ```javascript
 const router = require('express').Router();
@@ -308,7 +325,7 @@ const facebook = require('fb-messenger-bot-api');
 const messagingClient = new facebook.FacebookMessagingAPIClient(process.env.PAGE_ACCESS_TOKEN);
 const messageParser = facebook.FacebookMessageParser;
 ...
-router.get('/api/webhook',facebook.ValidateWebhook.validate);
+router.get('/api/webhook',facebook.ValidateWebhook.validateServer);
 router.post('/api/webhook', (req, res) => {
     const incomingMessages = messageParser.parsePayload(req.body);  
     ...
@@ -332,7 +349,7 @@ or
 import {FacebookMessagingAPIClient, ValidateWebhook, FacebookMessageParser} from 'fb-messenger-bot-api';
 import {Router} from 'express';
 ...
-router.get('/api/webhook',facebook.ValidateWebhook.validate);
+router.get('/api/webhook',facebook.ValidateWebhook.validateServer);
 router.post('/api/webhook', (req, res) => {
     try {
     const incomingMessages = messageParser.parsePayload(req.body);  

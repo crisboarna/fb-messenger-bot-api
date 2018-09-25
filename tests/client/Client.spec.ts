@@ -48,16 +48,16 @@ describe('Client', () => {
             const result = client.markSeen(TEST_ID);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.markSeen(TEST_ID, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -81,16 +81,16 @@ describe('Client', () => {
                 const result = client.toggleTyping(TEST_ID, true);
 
                 expect(result.constructor).toEqual(Promise);
-                expect(mockRequest).toBeCalled();
-                expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+                expect(mockRequest).toHaveBeenCalled();
+                expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
             });
 
             it('given cb no promise returned and correct payload generated', () => {
                 const result = client.toggleTyping(TEST_ID, true, TEST_CALLBACK);
 
                 expect(result).toEqual(undefined);
-                expect(mockRequest).toBeCalled();
-                expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+                expect(mockRequest).toHaveBeenCalled();
+                expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
             });
         });
 
@@ -113,24 +113,24 @@ describe('Client', () => {
                 const result = client.toggleTyping(TEST_ID, false);
 
                 expect(result.constructor).toEqual(Promise);
-                expect(mockRequest).toBeCalled();
-                expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+                expect(mockRequest).toHaveBeenCalled();
+                expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
             });
 
             it('given cb no promise returned and correct payload generated', () => {
                 const result = client.toggleTyping(TEST_ID, false, TEST_CALLBACK);
 
                 expect(result).toEqual(undefined);
-                expect(mockRequest).toBeCalled();
-                expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+                expect(mockRequest).toHaveBeenCalled();
+                expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
             });
 
             it('given cb no promise returned, no toggle provided and correct payload generated', () => {
                 const result = client.toggleTyping(TEST_ID, TEST_CALLBACK);
 
                 expect(result).toEqual(undefined);
-                expect(mockRequest).toBeCalled();
-                expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+                expect(mockRequest).toHaveBeenCalled();
+                expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
             });
         });
     });
@@ -149,16 +149,16 @@ describe('Client', () => {
             const result = client.getUserProfile(TEST_ID, [TEST_TEXT, TEST_TEXT]);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.getUserProfile(TEST_ID, [TEST_TEXT, TEST_TEXT], TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('returns promise given no cb and no fields and generates correct payload', () => {
@@ -174,8 +174,8 @@ describe('Client', () => {
             const result = client.getUserProfile(TEST_ID);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -200,16 +200,16 @@ describe('Client', () => {
             const result = client.sendTextMessage(TEST_ID, TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.sendTextMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -261,32 +261,32 @@ describe('Client', () => {
             const result = client.sendImageMessage(TEST_ID, TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('given cb no promise returned, no url and correct payload generated', () => {
             const result = client.sendImageMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('returns promise given no cb, url and generates correct payload', () => {
             const result = client.sendImageMessage(TEST_ID, TEST_URL);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
 
         it('given cb no promise returned, url and correct payload generated', () => {
             const result = client.sendImageMessage(TEST_ID, TEST_URL, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
     });
 
@@ -338,32 +338,32 @@ describe('Client', () => {
             const result = client.sendAudioMessage(TEST_ID, TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('given cb no promise returned, no url and correct payload generated', () => {
             const result = client.sendAudioMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('returns promise given no cb, url and generates correct payload', () => {
             const result = client.sendAudioMessage(TEST_ID, TEST_URL);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
 
         it('given cb no promise returned, url and correct payload generated', () => {
             const result = client.sendAudioMessage(TEST_ID, TEST_URL, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
     });
 
@@ -415,32 +415,32 @@ describe('Client', () => {
             const result = client.sendVideoMessage(TEST_ID, TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('given cb no promise returned, no url and correct payload generated', () => {
             const result = client.sendVideoMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('returns promise given no cb, url and generates correct payload', () => {
             const result = client.sendVideoMessage(TEST_ID, TEST_URL);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
 
         it('given cb no promise returned, url and correct payload generated', () => {
             const result = client.sendVideoMessage(TEST_ID, TEST_URL, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
     });
 
@@ -492,32 +492,32 @@ describe('Client', () => {
             const result = client.sendFileMessage(TEST_ID, TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('given cb no promise returned, no url and correct payload generated', () => {
             const result = client.sendFileMessage(TEST_ID, TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadId);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadId, expect.any(Function));
         });
 
         it('returns promise given no cb, url and generates correct payload', () => {
             const result = client.sendFileMessage(TEST_ID, TEST_URL);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
 
         it('given cb no promise returned, url and correct payload generated', () => {
             const result = client.sendFileMessage(TEST_ID, TEST_URL, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayloadUrl);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayloadUrl, expect.any(Function));
         });
     });
 
@@ -549,16 +549,16 @@ describe('Client', () => {
             const result = client.sendButtonsMessage(TEST_ID, TEST_TEXT, TEST_BUTTONS);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.sendButtonsMessage(TEST_ID, TEST_TEXT, TEST_BUTTONS, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -584,16 +584,16 @@ describe('Client', () => {
             const result = client.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [TEST_TEXT]);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [TEST_TEXT], TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('returns promise given no cb, attachment payload and generates correct payload', () => {
@@ -623,8 +623,8 @@ describe('Client', () => {
             const result = client.sendQuickReplyMessage(TEST_ID, builder.build(), [TEST_TEXT]);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -659,8 +659,8 @@ describe('Client', () => {
             const result = client.sendTemplateMessage(TEST_ID, builder.build());
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
@@ -669,8 +669,8 @@ describe('Client', () => {
             const result = client.sendTemplateMessage(TEST_ID, builder.build(), TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 });

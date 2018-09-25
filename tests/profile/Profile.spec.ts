@@ -32,16 +32,16 @@ describe('Profile', () => {
             const result = client.setGreetingMessage(TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setGreetingMessage(TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -67,16 +67,16 @@ describe('Profile', () => {
            const result = client.setGetStartedAction(TEST_TEXT);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setGetStartedAction(TEST_TEXT, TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 
@@ -103,16 +103,16 @@ describe('Profile', () => {
             const result = client.setPersistentMenu([TEST_TEXT]);
 
             expect(result.constructor).toEqual(Promise);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
 
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setPersistentMenu([TEST_TEXT], TEST_CALLBACK);
 
             expect(result).toEqual(undefined);
-            expect(mockRequest).toBeCalled();
-            expect(mockRequest.mock.calls[0][0]).toEqual(correctPayload);
+            expect(mockRequest).toHaveBeenCalled();
+            expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
     });
 });

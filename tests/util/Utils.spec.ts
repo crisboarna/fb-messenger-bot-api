@@ -40,8 +40,8 @@ describe('Utils', () => {
                const result = utils.sendMessage(options, requestData, mockCallback);
 
                expect(result).toBeUndefined();
-               expect(mockCallback).toBeCalled();
-               expect(mockCallback).toBeCalledWith(TEST_ERROR);
+               expect(mockCallback).toHaveBeenCalled();
+               expect(mockCallback).toHaveBeenCalledWith(TEST_ERROR);
            });
 
            it('calls cb with body error given no error and body with error', () => {
@@ -52,8 +52,8 @@ describe('Utils', () => {
                const result = utils.sendMessage(options, requestData, mockCallback);
 
                expect(result).toBeUndefined();
-               expect(mockCallback).toBeCalled();
-               expect(mockCallback).toBeCalledWith(TEST_ERROR);
+               expect(mockCallback).toHaveBeenCalled();
+               expect(mockCallback).toHaveBeenCalledWith(TEST_ERROR);
            });
 
            it('calls cb with body given no error and body', () => {
@@ -65,8 +65,8 @@ describe('Utils', () => {
                const result = utils.sendMessage(options, requestData, mockCallback);
 
                expect(result).toBeUndefined();
-               expect(mockCallback).toBeCalled();
-               expect(mockCallback).toBeCalledWith(null, TEST_BODY);
+               expect(mockCallback).toHaveBeenCalled();
+               expect(mockCallback).toHaveBeenCalledWith(null, TEST_BODY);
            });
        });
 

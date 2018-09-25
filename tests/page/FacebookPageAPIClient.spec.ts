@@ -28,8 +28,9 @@ describe('FacebookPageAPIClient', () => {
             mockUtils.Utils.getProxyData = mockProxy;
 
             new Page(TEST_ID, TEST_TOKEN);
-            expect(mockProxy).toBeCalled();
-            expect(mockProxy).toBeCalledWith({token: TEST_TOKEN}, undefined);
+
+            expect(mockProxy).toHaveBeenCalled();
+            expect(mockProxy).toHaveBeenCalledWith({token: TEST_TOKEN}, undefined);
             mockUtils.Utils.getProxyData = mockGetProxyData;
         });
     });
@@ -37,7 +38,9 @@ describe('FacebookPageAPIClient', () => {
     describe('setImageUrl', () => {
         it('creates correct payload', () => {
             const testProfile = new Page(TEST_ID, TEST_TOKEN);
+
             const result = testProfile.setImageUrl(TEST_TEXT);
+
             expect(result.constructor.name).toEqual('FacebookPageAPIClient');
             expect(result.url).toEqual(TEST_TEXT);
             expect(result.caption).toBeUndefined();
@@ -49,7 +52,9 @@ describe('FacebookPageAPIClient', () => {
     describe('setImageCaption', () => {
         it('creates correct payload', () => {
             const testPage = new Page(TEST_ID, TEST_TOKEN);
+
             const result = testPage.setImageCaption(TEST_TEXT);
+
             expect(result.constructor.name).toEqual('FacebookPageAPIClient');
             expect(result.caption).toEqual(TEST_TEXT);
             expect(result.url).toBeUndefined();
@@ -61,7 +66,9 @@ describe('FacebookPageAPIClient', () => {
     describe('setPostText', () => {
         it('creates correct payload', () => {
             const testProfile = new Page(TEST_ID, TEST_TOKEN);
+
             const result = testProfile.setPostText(TEST_TEXT);
+
             expect(result.constructor.name).toEqual('FacebookPageAPIClient');
             expect(result.message).toEqual(TEST_TEXT);
             expect(result.caption).toBeUndefined();
@@ -73,7 +80,9 @@ describe('FacebookPageAPIClient', () => {
     describe('setPostLink', () => {
         it('creates correct payload', () => {
             const testProfile = new Page(TEST_ID, TEST_TOKEN);
+
             const result = testProfile.setPostLink(TEST_TEXT);
+
             expect(result.constructor.name).toEqual('FacebookPageAPIClient');
             expect(result.link).toEqual(TEST_TEXT);
             expect(result.message).toBeUndefined();
@@ -88,9 +97,11 @@ describe('FacebookPageAPIClient', () => {
             const EXPECTED_PAYLOAD = {"json": {"caption": "TEST_TEXT", "url": "TEST_DATA"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/TEST_ID/photos"};
             testProfile.setImageCaption(TEST_TEXT);
             testProfile.setImageUrl(TEST_DATA);
+
             testProfile.sendImage();
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('creates correct payload and passes through cb', () => {
@@ -99,9 +110,11 @@ describe('FacebookPageAPIClient', () => {
             testProfile.setImageCaption(TEST_TEXT);
             testProfile.setImageUrl(TEST_DATA);
             const EXPECTED_PAYLOAD = {"json": {"caption": "TEST_TEXT", "url": "TEST_DATA"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/TEST_ID/photos"};
+
             testProfile.sendImage(TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 
@@ -111,9 +124,11 @@ describe('FacebookPageAPIClient', () => {
             const EXPECTED_PAYLOAD = {"json": {"link": "TEST_DATA", "message": "TEST_TEXT"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/TEST_ID/feed"};
             testProfile.setPostText(TEST_TEXT);
             testProfile.setPostLink(TEST_DATA);
+
             testProfile.sendPost();
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, undefined);
         });
 
         it('creates correct payload and passes through cb', () => {
@@ -122,9 +137,11 @@ describe('FacebookPageAPIClient', () => {
             testProfile.setPostText(TEST_TEXT);
             testProfile.setPostLink(TEST_DATA);
             const EXPECTED_PAYLOAD = {"json": {"link": "TEST_DATA", "message": "TEST_TEXT"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/TEST_ID/feed"};
+
             testProfile.sendPost(TEST_CB);
-            expect(mockSendMessage).toBeCalled();
-            expect(mockSendMessage).toBeCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
+
+            expect(mockSendMessage).toHaveBeenCalled();
+            expect(mockSendMessage).toHaveBeenCalledWith(EXPECTED_PAYLOAD, {token: TEST_TOKEN}, TEST_CB);
         });
     });
 });
