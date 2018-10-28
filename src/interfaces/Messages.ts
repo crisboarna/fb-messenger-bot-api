@@ -56,7 +56,7 @@ export interface FacebookMessagePayloadMessageEntry {
   metadata?: string;
   seq?: string;
   text?: string;
-  attachments?: FacebookMessagePayloadAttachments[] | FacebookMessagePayloadAttachmentsFallback[];
+  attachments?: (FacebookMessagePayloadAttachments | FacebookMessagePayloadAttachmentsFallback)[];
   quick_reply?: {
     payload: string,
   };

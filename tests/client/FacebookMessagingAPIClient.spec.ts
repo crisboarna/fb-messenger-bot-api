@@ -37,7 +37,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('markSeen', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_TEXT"}, "sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.markSeen(TEST_TEXT);
 
@@ -48,7 +48,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_TEXT"}, "sender_action": "mark_seen"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.markSeen(TEST_TEXT, TEST_CB);
 
@@ -60,7 +60,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('toggleTyping', () => {
         it('send correct payload as promise given no cb and no toggle value - default to off', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_ID"}, "sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.toggleTyping(TEST_ID);
 
@@ -70,7 +70,7 @@ describe('FacebookMessagingAPIClient', () => {
 
         it('send correct payload as promise given no cb and specified value', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_ID"}, "sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.toggleTyping(TEST_ID, true);
 
@@ -81,7 +81,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_TEXT"}, "sender_action": "typing_on"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.toggleTyping(TEST_TEXT, true, TEST_CB);
 
@@ -92,7 +92,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb and no value specified - using default value', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"recipient": {"id": "TEST_TEXT"}, "sender_action": "typing_off"}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.toggleTyping(TEST_TEXT, TEST_CB);
 
@@ -104,7 +104,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendTextMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}, "recipient": {"id": "TEST_ID"} }, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendTextMessage(TEST_ID, TEST_TEXT);
 
@@ -115,7 +115,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"text": TEST_TEXT}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendTextMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -127,7 +127,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendImageMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendImageMessage(TEST_ID, TEST_TEXT);
 
@@ -138,7 +138,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "image"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendImageMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -150,7 +150,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendAudioMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendAudioMessage(TEST_ID, TEST_TEXT);
 
@@ -161,7 +161,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "audio"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendAudioMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -173,7 +173,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendVideoMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendVideoMessage(TEST_ID, TEST_TEXT);
 
@@ -184,7 +184,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "video"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendVideoMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -197,7 +197,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_URL = 'http://www.testremoteurl.com/image.jpg';
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"is_reusable": true, "url": "http://www.testremoteurl.com/image.jpg"}, "type": "file"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"is_reusable": true, "url": "http://www.testremoteurl.com/image.jpg"}, "type": "file"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendFileMessage(TEST_ID, TEST_URL);
 
@@ -208,7 +208,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "file"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"attachment_id": "TEST_TEXT"}, "type": "file"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendFileMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -220,7 +220,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendButtonsMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendButtonsMessage(TEST_ID, TEST_TEXT, []);
 
@@ -231,7 +231,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"buttons": [], "template_type": "button", "text": "TEST_TEXT"}, "type": "template"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendButtonsMessage(TEST_ID, TEST_TEXT, [], TEST_CB);
 
@@ -243,7 +243,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendTemplateMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendTemplateMessage(TEST_ID, TEST_TEXT);
 
@@ -254,7 +254,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": "TEST_TEXT", "type": "template"}}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendTemplateMessage(TEST_ID, TEST_TEXT, TEST_CB);
 
@@ -266,7 +266,7 @@ describe('FacebookMessagingAPIClient', () => {
     describe('sendQuickReplyMessage', () => {
         it('send correct payload as promise given no cb', () => {
             const testClient = new Client(TEST_TOKEN);
-            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"test": "TEST_TEXT"}, "type": "template"}, "quick_replies": []}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"attachment": {"payload": {"test": "TEST_TEXT"}, "type": "template"}, "quick_replies": []}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendQuickReplyMessage(TEST_ID, {type: ATTACHMENT_TYPE.TEMPLATE,payload: {test:TEST_TEXT}}, []);
 
@@ -277,7 +277,7 @@ describe('FacebookMessagingAPIClient', () => {
         it('send correct payload with cb given cb', () => {
             const testClient = new Client(TEST_TOKEN);
             const TEST_CB = () => TEST_TOKEN;
-            const EXPECTED_PAYLOAD = {"json": {"message": {"quick_replies": [], "text": "TEST_TEXT"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
+            const EXPECTED_PAYLOAD = {"json": {"message": {"quick_replies": [], "text": "TEST_TEXT"}, "recipient": {"id": "TEST_ID"}}, "method": "POST", "qs": {}, "url": "https://graph.facebook.com/v3.1/me/messages"};
 
             testClient.sendQuickReplyMessage(TEST_ID, TEST_TEXT, [], TEST_CB);
 

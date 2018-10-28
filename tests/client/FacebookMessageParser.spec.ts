@@ -2,16 +2,16 @@ import {FacebookMessageParser} from "../../src";
 
 describe('FacebookMessageParser', () => {
     describe('parsePayload', () => {
-        it('given invalid payload, return null', () => {
-            expect(FacebookMessageParser.parsePayload(<any>{})).toEqual(null);
+        it('given invalid payload, return []', () => {
+            expect(FacebookMessageParser.parsePayload(<any>{})).toEqual([]);
         });
 
-        it('given object property of incorrect value, return null', () => {
-            expect(FacebookMessageParser.parsePayload(<any>{object: 'TEST'})).toEqual(null);
+        it('given object property of incorrect value, return []', () => {
+            expect(FacebookMessageParser.parsePayload(<any>{object: 'TEST'})).toEqual([]);
         });
 
-        it('given correct object property with no entry, return null', () => {
-            expect(FacebookMessageParser.parsePayload(<any>{object: 'page'})).toEqual(null);
+        it('given correct object property with no entry, return []', () => {
+            expect(FacebookMessageParser.parsePayload(<any>{object: 'page'})).toEqual([]);
         });
 
         it('given correct object property and entry with no deep entry, return correct result', () => {
