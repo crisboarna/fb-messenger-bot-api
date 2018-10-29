@@ -24,6 +24,7 @@
     "travis-deploy-once": "travis-deploy-once"
   },
   "dependencies": {
+    "crypto":"1.0.1",
     "request": "2.88.0"
   },
   "devDependencies": {

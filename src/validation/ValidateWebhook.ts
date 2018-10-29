@@ -1,3 +1,5 @@
+import * as crypto from "crypto";
+
 /**
  * Class used to handle the initial verification of a newly added webhook endpoint to Facebook. To be used with the GET
  * route as that is the method used by Facebook for token verification.
@@ -47,6 +49,34 @@ export class ValidateWebhook {
       res.status(200).send(req.query['hub.challenge']);
     }
   }
+
+      /**
+     * Method to validate Facebook message integrity
+     * @param req - The request object from server
+     * @param res - The response object from server
+     * @param applicationSecret - The Facebook application secret - Optional, will take FB_APPLICATION_SECRET if no parameter passed in.
+     */
+    public static validateMessageIntegrity(req:any, res: any, applicationSecret?: string) {
+      const xHubSignatureHeaderValue = req.headers["x-hub-signature"];
+      if (!xHubSignatureHeaderValue && Array.isArray(xHubSignatureHeaderValue))
+      {
+        res.sendStatus(403);
+        return;
+      }
+      const xHubSignatureValueParts = xHubSignatureHeaderValue.split("=");
+      if (xHubSignatureValueParts.length !== 2)
+      {
+        res.sendStatus(403);
+        return;
+      }
+      const fbApplicationSecret = applicationSecret ? applicationSecret : process.env.FB_APPLICATION_SECRET;
+      const authenticationCode = crypto.createHmac(xHubSignatureValueParts[0], fbApplicationSecret).digest("hex");
+      if (authenticationCode === xHubSignatureValueParts[1])
+      {
+        return;
+      }
+      res.sendStatus(403);
+    }
 
   private static verifyToken(req: any, facebookToken?: string) {
     const tokenPresent = facebookToken != null;
