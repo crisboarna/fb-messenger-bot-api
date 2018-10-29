@@ -42,10 +42,6 @@ export class FacebookMessagingAPIClient {
     this.requestData = Utils.getProxyData(this.requestData, proxyData);
   }
 
-  public parsePayload(): void
-  {
-
-  }
     /**
      * Marks latest message from user as seen.
      * Optional cb, otherwise returns promise
