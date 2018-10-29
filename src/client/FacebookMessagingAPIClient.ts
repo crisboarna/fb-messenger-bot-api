@@ -34,6 +34,7 @@ export class FacebookMessagingAPIClient {
 
     /**
      * @param {string} token - Facebook FacebookPageAPIClient Token
+     * @param {string} applicationSecret - Facebook application secret to validate the messages received from the FB messenger
      * @param {ProxyData} proxyData - Proxy information if behind proxy
      */
   public constructor(token: string, proxyData?: ProxyData) {
@@ -41,6 +42,10 @@ export class FacebookMessagingAPIClient {
     this.requestData = Utils.getProxyData(this.requestData, proxyData);
   }
 
+  public parsePayload(): void
+  {
+
+  }
     /**
      * Marks latest message from user as seen.
      * Optional cb, otherwise returns promise
