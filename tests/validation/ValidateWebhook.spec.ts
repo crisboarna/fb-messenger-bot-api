@@ -169,67 +169,49 @@ describe('ValidateWebhook', () => {
     describe('validateMessageIntegrity', () => {
         const sha1Signature = `sha1=7327d5f32362a5d38e8eb7e52d6d8f77cf6e952e`;
 
-        it('given no xhubsignature return 403', () => {
-            const req = {headers:{}};
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+        it('given no xhubsignature return false', () => {
+            const result = ValidateWebhook.validateMessageIntegrity(0 as any);
+            expect(result).toEqual(false);
         });
 
-        it('given invalid xhubsignature return 403', () => {
-            const req = {headers:{'x-hub-signature': []}};
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+        it('given invalid xhubsignature return false', () => {
+            const result = ValidateWebhook.validateMessageIntegrity([] as any);
+            expect(result).toEqual(false);
         });
 
-        it('given invalid xhubsignature sha1 format return 403', () => {
-            const req = {headers:{'x-hub-signature': 'sha1wegedrfdgvwsrdgv'}};
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+        it('given invalid xhubsignature sha1 format return false', () => {
+            const invalidSignature = 'sha1wegedrfdgvwsrdgv';
+            const result = ValidateWebhook.validateMessageIntegrity(invalidSignature);
+            expect(result).toEqual(false);
         });
 
-        it('given no FB_APP_SECRET return 403', () => {
-            const req = {headers:{'x-hub-signature': sha1Signature}};
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+        it('given no FB_APP_SECRET return false', () => {
+            const result = ValidateWebhook.validateMessageIntegrity(sha1Signature);
+            expect(result).toEqual(false);
         });
 
-        it('given parameter FB_APP_SECRET and invalid signature return 403', () => {
-            const req = {headers:{'x-hub-signature': sha1Signature}};
-            ValidateWebhook.validateMessageIntegrity(req, res, TEST_INCORRECT_TOKEN);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+        it('given parameter FB_APP_SECRET and invalid signature return false', () => {
+            const result = ValidateWebhook.validateMessageIntegrity(sha1Signature, TEST_INCORRECT_TOKEN);
+            expect(result).toEqual(false);
         });
 
-        it('given parameter FB_APP_SECRET and valid signature return', () => {
-            const req = {headers:{'x-hub-signature': sha1Signature}};
-            ValidateWebhook.validateMessageIntegrity(req, res, TEST_CORRECT_TOKEN);
-            expect(mockSendStatus).toHaveBeenCalledTimes(0);
+        it('given parameter FB_APP_SECRET and valid signature return true', () => {
+            const result = ValidateWebhook.validateMessageIntegrity(sha1Signature, TEST_CORRECT_TOKEN);
+            expect(result).toEqual(true);
         });
 
-        it('given environment FB_APP_SECRET and invalid signature return 403', () => {
-            const req = {headers:{'x-hub-signature': 'sha1=32t4gerdsdfsd'}};
+        it('given environment FB_APP_SECRET and invalid signature return false', () => {
+            const incorrectSignature = "sha1=32t4gerdsdfsd";
             process.env.FB_APPLICATION_SECRET = TEST_CORRECT_TOKEN;
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalled();
-            expect(mockSendStatus).toHaveBeenCalledWith(403);
-            expect(mockSendStatus).toHaveBeenCalledTimes(1);
+            const result = ValidateWebhook.validateMessageIntegrity(incorrectSignature);
+            expect(result).toEqual(false);
             delete process.env.FB_APPLICATION_SECRET;
         });
 
-        it('given environment FB_APP_SECRET and valid signature return', () => {
-            const req = {headers:{'x-hub-signature': sha1Signature}};
+        it('given environment FB_APP_SECRET and valid signature return true', () => {
             process.env.FB_APPLICATION_SECRET = TEST_CORRECT_TOKEN;
-            ValidateWebhook.validateMessageIntegrity(req, res);
-            expect(mockSendStatus).toHaveBeenCalledTimes(0);
+            const result = ValidateWebhook.validateMessageIntegrity(sha1Signature);
+            expect(result).toEqual(true);
             delete process.env.FB_APPLICATION_SECRET;
         });
     });

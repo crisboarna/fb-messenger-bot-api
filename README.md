@@ -44,6 +44,7 @@ npm install fb-messenger-bot-api
 * [Validating Facebook Webhook](#validating-facebook-webhook)
   * [Server Validation](#server-validation)
   * [Lambda Validation](#lambda-validation)
+* [Validating Message Integrity](#validating-message-integrity)  
 * [Complete Examples](#complete-example)
 * [Creating Facebook App](#creating-facebook-app)
 
@@ -318,6 +319,23 @@ const handler = (event, context, callback: Function) => {
 }
 ```
 Both `validateLambda` and `validateServer` support passing in verification token as third parameter. Otherwise will check `process.env.FB_VERIFICATION_TOKEN` for value.
+
+## Validating Message Integrity
+Validates the integrity of the message received from Facebook platform using the provided signature signed with Facebook Application Secret.
+
+The Facebook application secret can be provided either as second optional parameter to `ValidateWebhook.validateMessageIntegrity(<X-HUB-SIGNATURE>, <FB_APPLICATION_SECRET>)` or by setting `process.env.FB_APPLICATION_SECRET`.
+
+Compatible with both server/less paradigms as part of single line middleware function to Express or as Lambda first check before callback or remainder or programme.
+
+```typescript
+import {ValidateWebhook} from 'fb-messenger-bot-api';
+const messageIntegrityChecker = (req, res) => {
+    const validMessage = ValidateWebhook.validateMessageIntegrity(req.headers["x-hub-signature"]);
+    ...
+}
+router.post('/api/webhook/',messageIntegrityChecker);
+```
+
 ## Complete example
 ```javascript
 const router = require('express').Router();

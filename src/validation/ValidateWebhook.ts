@@ -52,22 +52,18 @@ export class ValidateWebhook {
 
       /**
      * Method to validate Facebook message integrity
-     * @param req - The request object from server
-     * @param res - The response object from server
+     * @param xHubSignature - The Signature present in Facebook payload
      * @param applicationSecret - The Facebook application secret - Optional, will take FB_APPLICATION_SECRET if no parameter passed in.
      */
-  public static validateMessageIntegrity(req:any, res: any, applicationSecret?: string) {
-    const xHubSignatureHeaderValue = req.headers['x-hub-signature'];
+  public static validateMessageIntegrity(xHubSignature: string, applicationSecret?: string): boolean {
 
-    if (!xHubSignatureHeaderValue || Array.isArray(xHubSignatureHeaderValue)) {
-      res.sendStatus(403);
-      return;
+    if (!xHubSignature || Object.prototype.toString.call(xHubSignature) !== '[object String]') {
+      return false;
     }
 
-    const xHubSignatureValueParts = xHubSignatureHeaderValue.split('=');
+    const xHubSignatureValueParts = xHubSignature.split('=');
     if (xHubSignatureValueParts.length !== 2) {
-      res.sendStatus(403);
-      return;
+      return false;
     }
 
     let fbApplicationSecret;
@@ -77,16 +73,16 @@ export class ValidateWebhook {
       fbApplicationSecret = process.env.FB_APPLICATION_SECRET;
     } else {
       console.error('No Facebook Application Secret provided.');
-      res.sendStatus(403);
-      return;
+      return false;
     }
 
     const authenticationCode = createHmac(xHubSignatureValueParts[0], fbApplicationSecret).digest('hex');
 
     if (authenticationCode === xHubSignatureValueParts[1]) {
-      return;
+      return true;
     }
-    res.sendStatus(403);
+
+    return false;
   }
 
   private static verifyToken(req: any, facebookToken?: string) {
