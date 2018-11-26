@@ -34,6 +34,7 @@ export interface IGenericTemplateElement {
   subtitle?: string;
   image_url?: string;
   default_action?: {
+    type: string
     url: string,
     messenger_extensions?: boolean,
     fallback_url?: string,

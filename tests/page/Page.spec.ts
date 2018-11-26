@@ -41,7 +41,7 @@ describe('Page', () => {
 
             const result = client.setImageUrl(TEST_TEXT).setImageCaption(TEST_TEXT).sendImage(TEST_CALLBACK);
 
-            expect(result).toEqual(undefined);
+            expect(result instanceof Promise).toEqual(true);
             expect(mockRequest).toHaveBeenCalled();
             expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
@@ -75,7 +75,7 @@ describe('Page', () => {
 
             const result = client.setPostText(TEST_TEXT).setPostLink(TEST_TEXT).sendPost(TEST_CALLBACK);
 
-            expect(result).toEqual(undefined);
+            expect(result instanceof Promise).toEqual(true);
             expect(mockRequest).toHaveBeenCalled();
             expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });

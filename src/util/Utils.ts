@@ -70,7 +70,7 @@ export class Utils {
         if (body.error) return cb(body.error);
         cb(null, body);
       });
-      return undefined;
+      return Promise.resolve();
     }
   }
 

@@ -84,7 +84,7 @@ export class FacebookPageAPIClient {
   public sendImage(cb?: Function) {
     const options = Utils.getRequestOptions();
     options.url += `${this.pageId}/photos`;
-    options.method = `POST`;
+    options.method = 'POST';
     options.json = <PagePostImage>{ caption: this.caption, url: this.url };
     return Utils.sendMessage(options, this.requestData, cb);
   }
@@ -97,7 +97,7 @@ export class FacebookPageAPIClient {
   public sendPost(cb?: Function) {
     const options = Utils.getRequestOptions();
     options.url += `${this.pageId}/feed`;
-    options.method = `POST`;
+    options.method = 'POST';
     options.json = <PagePostText>{ message: this.message, link: this.link };
     return Utils.sendMessage(options, this.requestData, cb);
   }

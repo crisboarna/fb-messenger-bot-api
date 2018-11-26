@@ -39,7 +39,7 @@ describe('Utils', () => {
 
                const result = utils.sendMessage(options, requestData, mockCallback);
 
-               expect(result).toBeUndefined();
+               expect(result instanceof Promise).toEqual(true);
                expect(mockCallback).toHaveBeenCalled();
                expect(mockCallback).toHaveBeenCalledWith(TEST_ERROR);
            });
@@ -51,7 +51,7 @@ describe('Utils', () => {
 
                const result = utils.sendMessage(options, requestData, mockCallback);
 
-               expect(result).toBeUndefined();
+               expect(result instanceof Promise).toEqual(true);
                expect(mockCallback).toHaveBeenCalled();
                expect(mockCallback).toHaveBeenCalledWith(TEST_ERROR);
            });
@@ -64,7 +64,7 @@ describe('Utils', () => {
 
                const result = utils.sendMessage(options, requestData, mockCallback);
 
-               expect(result).toBeUndefined();
+               expect(result instanceof Promise).toEqual(true);
                expect(mockCallback).toHaveBeenCalled();
                expect(mockCallback).toHaveBeenCalledWith(null, TEST_BODY);
            });

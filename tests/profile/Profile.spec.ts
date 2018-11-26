@@ -39,7 +39,7 @@ describe('Profile', () => {
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setGreetingMessage(TEST_TEXT, TEST_CALLBACK);
 
-            expect(result).toEqual(undefined);
+            expect(result instanceof Promise).toEqual(true);
             expect(mockRequest).toHaveBeenCalled();
             expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
@@ -74,7 +74,7 @@ describe('Profile', () => {
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setGetStartedAction(TEST_TEXT, TEST_CALLBACK);
 
-            expect(result).toEqual(undefined);
+            expect(result instanceof Promise).toEqual(true);
             expect(mockRequest).toHaveBeenCalled();
             expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
@@ -110,7 +110,7 @@ describe('Profile', () => {
         it('given cb no promise returned and correct payload generated', () => {
             const result = client.setPersistentMenu([TEST_TEXT], TEST_CALLBACK);
 
-            expect(result).toEqual(undefined);
+            expect(result instanceof Promise).toEqual(true);
             expect(mockRequest).toHaveBeenCalled();
             expect(mockRequest).toHaveBeenCalledWith(correctPayload, expect.any(Function));
         });
