@@ -2,13 +2,13 @@ import { IButton } from '../../interfaces';
 import { BUTTON_TYPE } from '../../enums';
 
 export abstract class Button implements IButton{
-  private _type: BUTTON_TYPE;
+  readonly type: BUTTON_TYPE;
 
   public constructor(type: BUTTON_TYPE) {
-    this._type = type;
+    this.type = type;
   }
 
-  get type(): BUTTON_TYPE {
-    return this._type;
+  get Type(): BUTTON_TYPE {
+    return this.type;
   }
 }

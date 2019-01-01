@@ -9,38 +9,26 @@ import { GamePlayButtonBuilder } from '../../builders/buttons';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/buttons/game-play
  */
 export class GamePlayButton extends Button implements IGamePlayButton {
-  private _game_metadata: { player_id?: string; context_id?: string };
-  private _payload: string;
-  private _title: string;
+  readonly game_metadata: { player_id?: string; context_id?: string };
+  readonly payload: string;
+  readonly title: string;
 
   constructor(builder: GamePlayButtonBuilder) {
     super(builder.getType());
-    this._game_metadata = builder.getGameMetadata();
-    this._payload = builder.getPayload();
-    this._title = builder.getTitle();
+    this.game_metadata = builder.getGameMetadata();
+    this.payload = builder.getPayload();
+    this.title = builder.getTitle();
   }
 
-  get game_metadata(): { player_id?: string; context_id?: string } {
-    return this._game_metadata;
+  get GameMetadata(): { player_id?: string; context_id?: string } {
+    return this.game_metadata;
   }
 
-  set game_metadata(value: { player_id?: string; context_id?: string }) {
-    this._game_metadata = value;
+  get Payload(): string {
+    return this.payload;
   }
 
-  get payload(): string {
-    return this._payload;
-  }
-
-  set payload(value: string) {
-    this._payload = value;
-  }
-
-  get title(): string {
-    return this._title;
-  }
-
-  set title(value: string) {
-    this._title = value;
+  get Title(): string {
+    return this.title;
   }
 }

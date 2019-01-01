@@ -9,14 +9,14 @@ import { LogInButtonBuilder } from '../../builders/buttons';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/buttons/login
  */
 export class LogInButton extends Button implements ILogInButton {
-  private _url: string;
+  readonly url: string;
 
   constructor(builder: LogInButtonBuilder) {
     super(builder.getType());
-    this._url = builder.getUrl();
+    this.url = builder.getUrl();
   }
 
-  get url(): string {
-    return this._url;
+  get Url(): string {
+    return this.url;
   }
 }

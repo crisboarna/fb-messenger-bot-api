@@ -9,44 +9,44 @@ import { URLButtonBuilder } from '../../builders/buttons';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/buttons/url
  */
 export class URLButton extends Button implements IURLButton {
-  private _url: string;
-  private _title: string;
-  private _messenger_extensions?: boolean;
-  private _fallback_url?: string;
-  private _webview_height_ratio?: string;
-  private _webview_share_button?: string;
+  readonly url: string;
+  readonly title: string;
+  readonly messenger_extensions?: boolean;
+  readonly fallback_url?: string;
+  readonly webview_height_ratio?: string;
+  readonly webview_share_button?: string;
 
   public constructor(builder: URLButtonBuilder) {
     super(builder.getType());
-    this._url = builder.getUrl();
-    this._title = builder.getTitle();
-    this._messenger_extensions = builder.getMessengerExtensions();
-    this._fallback_url = builder.getFallbackUrl();
-    this._webview_share_button = builder.getWebviewShareButton();
-    this._webview_height_ratio = builder.getWebviewHeightRatio();
+    this.url = builder.getUrl();
+    this.title = builder.getTitle();
+    this.messenger_extensions = builder.getMessengerExtensions();
+    this.fallback_url = builder.getFallbackUrl();
+    this.webview_share_button = builder.getWebviewShareButton();
+    this.webview_height_ratio = builder.getWebviewHeightRatio();
   }
 
-  public get url(): string {
-    return this._url;
+  public get Url(): string {
+    return this.url;
   }
 
-  public get title(): string {
-    return this._title;
+  public get Title(): string {
+    return this.title;
   }
 
-  public get messenger_extensions(): boolean|undefined {
-    return this._messenger_extensions;
+  public get MessengerExtensions(): boolean|undefined {
+    return this.messenger_extensions;
   }
 
-  public get fallback_url(): string|undefined {
-    return this._fallback_url;
+  public get FallbackUrl(): string|undefined {
+    return this.fallback_url;
   }
 
-  public get webview_height_ratio(): string|undefined {
-    return this._webview_height_ratio;
+  public get WebviewHeightRatio(): string|undefined {
+    return this.webview_height_ratio;
   }
 
-  public get webview_share_button(): string|undefined {
-    return this._webview_share_button;
+  public get WebviewShareButton(): string|undefined {
+    return this.webview_share_button;
   }
 }

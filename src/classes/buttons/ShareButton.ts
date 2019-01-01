@@ -9,14 +9,14 @@ import { ShareButtonBuilder } from '../../builders/buttons';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/buttons/share
  */
 export class ShareButton extends Button implements IShareButton {
-  private _share_contents: IGenericTemplate;
+  readonly share_contents: IGenericTemplate;
 
   constructor(builder: ShareButtonBuilder) {
     super(builder.getType());
-    this._share_contents = builder.getShareContents();
+    this.share_contents = builder.getShareContents();
   }
 
-  get share_contents(): IGenericTemplate {
-    return this._share_contents;
+  get ShareContents(): IGenericTemplate {
+    return this.share_contents;
   }
 }

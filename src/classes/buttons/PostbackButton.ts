@@ -9,20 +9,20 @@ import { PostbackButtonBuilder } from '../../builders/buttons';
  * Check link for content restrictions: https://developers.facebook.com/docs/messenger-platform/reference/buttons/postback
  */
 export class PostbackButton extends Button implements IPostbackButton {
-  private _payload: string;
-  private _title: string;
+  readonly payload: string;
+  readonly title: string;
 
   constructor(builder: PostbackButtonBuilder) {
     super(builder.getType());
-    this._payload = builder.getPayload();
-    this._title = builder.getTitle();
+    this.payload = builder.getPayload();
+    this.title = builder.getTitle();
   }
 
-  get payload(): string {
-    return this._payload;
+  get Payload(): string {
+    return this.payload;
   }
 
-  get title(): string {
-    return this._title;
+  get Title(): string {
+    return this.title;
   }
 }
