@@ -1,6 +1,6 @@
 import { IButton } from '../../interfaces';
 import { ATTACHMENT_TYPE } from '../../enums';
-import { AttachmentButtonPayload } from '../../classes/buttons/AttachmentButtonPayload';
+import { AttachmentButtonPayload } from '../../classes/buttons';
 
 /**
  * Represents an entire Button payload. To be used as payload for Quick Reply attachment type to send Button with Quick Replies
@@ -19,16 +19,13 @@ export class AttachmentButtonBuilder {
     return this._type;
   }
 
-  public setType(value: ATTACHMENT_TYPE) {
-    this._type = value;
-  }
-
   public getText(): string {
     return this._text;
   }
 
   public setText(value: string) {
     this._text = value;
+    return this;
   }
 
   public getButtons(): IButton[] {
@@ -37,6 +34,7 @@ export class AttachmentButtonBuilder {
 
   public setButtons(value: IButton[]) {
     this._buttons = value;
+    return this;
   }
 
   public build(): AttachmentButtonPayload {

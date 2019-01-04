@@ -1,6 +1,6 @@
 import { ATTACHMENT_TYPE } from '../../enums';
 import { AttachmentPayload } from '../../client/Client';
-import { AttachmentButtonBuilder } from '../../builders/buttons/AttachmentButtonBuilder';
+import { AttachmentButtonBuilder } from '../../builders/buttons';
 
 export class AttachmentButtonPayload implements AttachmentPayload{
   readonly type: ATTACHMENT_TYPE;
