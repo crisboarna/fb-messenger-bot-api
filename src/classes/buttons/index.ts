@@ -7,3 +7,4 @@ export { LogOutButton } from './LogOutButton';
 export { PostbackButton } from './PostbackButton';
 export { ShareButton } from './ShareButton';
 export { URLButton } from './URLButton';
+export { AttachmentButtonPayload } from './AttachmentButtonPayload';

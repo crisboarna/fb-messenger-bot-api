@@ -6,3 +6,4 @@ export { LogOutButtonBuilder } from './LogOutButtonBuilder';
 export { PostbackButtonBuilder } from './PostbackButtonBuilder';
 export { ShareButtonBuilder } from './ShareButtonBuilder';
 export { URLButtonBuilder } from './URLButtonBuilder';
+export { AttachmentButtonBuilder } from './AttachmentButtonBuilder';
