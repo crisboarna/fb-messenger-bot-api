@@ -18,7 +18,7 @@
     "precommit": "npm t && npm run tslint && npm run build && git add .",
     "commit": "git-cz",
     "tslint": "./node_modules/.bin/tslint -c tslint.json -p tsconfig.json --fix",
-    "generate-docs": "./node_modules/.bin/typedoc --out ./docs --module modules --hideGenerator --tsconfig tsconfig.json",
+    "generate-docs": "./node_modules/.bin/typedoc --out ./docs --module es2020 --hideGenerator --tsconfig tsconfig.json",
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/.bin/codecov",
     "semantic-release": "semantic-release",
     "travis-deploy-once": "travis-deploy-once"
