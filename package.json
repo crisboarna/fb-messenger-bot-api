@@ -39,7 +39,7 @@
     "rimraf": "3.0.2",
     "semantic-release": "17.0.4",
     "travis-deploy-once": "5.0.11",
-    "ts-jest": "25.2.1",
+    "ts-jest": "25.3.0",
     "tslint": "^5.10.0",
     "tslint-config-airbnb": "5.11.2",
     "typedoc": "0.17.3",
