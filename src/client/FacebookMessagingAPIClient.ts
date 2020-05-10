@@ -202,6 +202,19 @@ export class FacebookMessagingAPIClient {
     return Utils.sendMessage(options, this.requestData, cb);
   }
 
+  /**
+   * Sends a message with your own payload
+   * Optional cb, otherwise returns promise
+   * @param {string} id
+   * @param {MessagePayload} payload
+   * @param {Function} cb
+   */
+  public sendDisplayMessage(id: string, payload: MessagePayload, cb?: Function) {
+    const options = this.generateBasicRequestPayload(id);
+    options.json = { ...options.json, message:payload };
+    return Utils.sendMessage(options, this.requestData, cb);
+  }
+
   private sendUrlOrIdBasedMessage(id: string, type: ATTACHMENT_TYPE, urlOrId: string, cb?: Function) {
     let payload;
     if (urlOrId.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)) {
@@ -214,12 +227,6 @@ export class FacebookMessagingAPIClient {
 
   private sendAttachmentMessage(id: string, payload: AttachmentPayload, cb?: Function) {
     return this.sendDisplayMessage(id, { attachment: payload }, cb);
-  }
-
-  private sendDisplayMessage(id: string, payload: MessagePayload, cb?: Function) {
-    const options = this.generateBasicRequestPayload(id);
-    options.json = { ...options.json, message:payload };
-    return Utils.sendMessage(options, this.requestData, cb);
   }
 
   private sendAction(id: string, payload: string, cb?: Function) {
