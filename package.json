@@ -28,7 +28,7 @@
     "request": "2.88.2"
   },
   "devDependencies": {
-    "@types/jest": "25.2.1",
+    "@types/jest": "25.2.2",
     "@types/request": "2.48.4",
     "codecov": "3.6.5",
     "commitizen": "4.1.2",
