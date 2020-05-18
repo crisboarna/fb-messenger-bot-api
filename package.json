@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/jest": "25.2.1",
     "@types/request": "2.48.4",
-    "codecov": "3.6.5",
+    "codecov": "3.7.0",
     "commitizen": "4.1.2",
     "cz-conventional-changelog": "3.2.0",
     "greenkeeper-lockfile": "1.15.1",
