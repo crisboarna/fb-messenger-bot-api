@@ -1,6 +1,6 @@
 import { RequestData, Utils } from '../util/Utils';
 import { IButton, ProxyData, IQuickReply, IMessageTemplate } from '../interfaces';
-import { ATTACHMENT_TYPE, IMAGE_ASPECT_RATIO, NOTIFICATION_MESSAGES_CTA_TEXT,
+import { ATTACHMENT_TYPE, IMAGE_ASPECT_RATIO, MESSAGE_TEMPLATE_TYPE, NOTIFICATION_MESSAGES_CTA_TEXT,
   NOTIFICATION_MESSAGES_FREQUENCY, NOTIFICATION_MESSAGES_REOPTIN } from '../enums';
 
 export interface ClientMessage {
@@ -182,7 +182,7 @@ export class FacebookMessagingAPIClient {
      * @return {Promise<any>}
      */
   public sendRecurringNotificationOptInRequest(id: string, optInPayload: RecurringNotificationOptInRequestPayload, cb?: Function) {
-    const optInPayloadWithType = { ...optInPayload, template_type: 'notification_messages' };
+    const optInPayloadWithType = { ...optInPayload, template_type: MESSAGE_TEMPLATE_TYPE.NOTIFICATION_MESSAGES };
     const payload = { type: ATTACHMENT_TYPE.TEMPLATE, payload: optInPayloadWithType };
     return this.sendAttachmentMessage(id, payload, cb);
   }
