@@ -34,6 +34,7 @@ export enum MESSAGE_TEMPLATE_TYPE {
     AIRLINE_CHECKIN = 'airline_checkin',
     AIRLINE_ITINERARY = 'airline_itinerary',
     AIRLINE_UPDATE = 'airline_update',
+    NOTIFICATION_MESSAGES = 'notification_messages',
 }
 
 export enum BUTTON_TYPE {
@@ -64,4 +65,28 @@ export enum REFERER_SOURCE {
     ADS = 'ADS',
     SHORTLINK = 'SHORTLINK',
     CUSTOMER_CHAT_PLUGIN = 'CUSTOMER_CHAT_PLUGIN',
+}
+
+export enum NOTIFICATION_MESSAGES_FREQUENCY {
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    MONTHLY = 'MONTHLY',
+}
+
+export enum NOTIFICATION_MESSAGES_CTA_TEXT {
+    GET = 'GET',
+    SIGN_UP = 'SIGN_UP',
+    ALLOW = 'ALLOW',
+    OPT_IN = 'OPT_IN',
+    FREQUENCY = 'FREQUENCY ',
+}
+
+export enum NOTIFICATION_MESSAGES_REOPTIN {
+    ENABLED = 'ENABLED',
+    DISABLED = 'DISABLED',
+}
+
+export enum IMAGE_ASPECT_RATIO {
+    HORIZONTAL = 'HORIZONTAL',
+    SQUARE = 'SQUARE',
 }

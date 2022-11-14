@@ -1,6 +1,6 @@
 import { RequestData, Utils } from '../util/Utils';
 import { IButton, ProxyData, IQuickReply, IMessageTemplate } from '../interfaces';
-import { ATTACHMENT_TYPE } from '../enums';
+import { ATTACHMENT_TYPE, IMAGE_ASPECT_RATIO, NOTIFICATION_MESSAGES_CTA_TEXT, NOTIFICATION_MESSAGES_FREQUENCY, NOTIFICATION_MESSAGES_REOPTIN } from '../enums';
 
 export interface ClientMessage {
   message?: MessagePayload;
@@ -16,6 +16,17 @@ export interface MessagePayload {
   text?: string;
   quick_replies?: IQuickReply[];
   attachment?: AttachmentPayload;
+}
+
+export interface RecurringNotificationOptInRequestPayload {
+  elements: [],
+  image_aspect_ratio?: IMAGE_ASPECT_RATIO;
+  image_url?: string;
+  notification_messages_frequency: NOTIFICATION_MESSAGES_FREQUENCY;
+  notification_messages_cta_text?: NOTIFICATION_MESSAGES_CTA_TEXT;
+  notification_messages_reoptin?: NOTIFICATION_MESSAGES_REOPTIN;
+  payload: string;
+  title: string;
 }
 
 /**
@@ -157,6 +168,20 @@ export class FacebookMessagingAPIClient {
      */
   public sendTemplateMessage(id: string, templatePayload: IMessageTemplate, cb?: Function) {
     const payload = { type: ATTACHMENT_TYPE.TEMPLATE, payload: templatePayload };
+    return this.sendAttachmentMessage(id, payload, cb);
+  }
+
+    /**
+     * Sends an Recurring Notification Opt In Request: https://developers.facebook.com/docs/messenger-platform/send-messages/recurring-notifications/
+     * Optional cb, otherwise returns promise
+     * @param {string} id
+     * @param {IMessageTemplate} templatePayload
+     * @param {Function} cb
+     * @return {Promise<any>}
+     */
+  public sendRecurringNotificationOptInRequest(id: string, optInPayload: RecurringNotificationOptInRequestPayload, cb?: Function) {
+    const optInPayloadWithType = { ...optInPayload, template_type: 'notification_messages' };
+    const payload = { type: ATTACHMENT_TYPE.TEMPLATE, payload: optInPayloadWithType };
     return this.sendAttachmentMessage(id, payload, cb);
   }
 
