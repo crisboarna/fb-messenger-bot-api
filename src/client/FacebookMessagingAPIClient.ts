@@ -177,7 +177,7 @@ export class FacebookMessagingAPIClient {
      * https://developers.facebook.com/docs/messenger-platform/send-messages/recurring-notifications/
      * Optional cb, otherwise returns promise
      * @param {string} id
-     * @param {IMessageTemplate} templatePayload
+     * @param {RecurringNotificationOptInRequestPayload} optInPayload
      * @param {Function} cb
      * @return {Promise<any>}
      */
