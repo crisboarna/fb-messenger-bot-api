@@ -1,6 +1,7 @@
 import { RequestData, Utils } from '../util/Utils';
 import { IButton, ProxyData, IQuickReply, IMessageTemplate } from '../interfaces';
-import { ATTACHMENT_TYPE, IMAGE_ASPECT_RATIO, NOTIFICATION_MESSAGES_CTA_TEXT, NOTIFICATION_MESSAGES_FREQUENCY, NOTIFICATION_MESSAGES_REOPTIN } from '../enums';
+import { ATTACHMENT_TYPE, IMAGE_ASPECT_RATIO, NOTIFICATION_MESSAGES_CTA_TEXT,
+  NOTIFICATION_MESSAGES_FREQUENCY, NOTIFICATION_MESSAGES_REOPTIN } from '../enums';
 
 export interface ClientMessage {
   message?: MessagePayload;
@@ -19,7 +20,7 @@ export interface MessagePayload {
 }
 
 export interface RecurringNotificationOptInRequestPayload {
-  elements: [],
+  elements: [];
   image_aspect_ratio?: IMAGE_ASPECT_RATIO;
   image_url?: string;
   notification_messages_frequency: NOTIFICATION_MESSAGES_FREQUENCY;
@@ -172,7 +173,8 @@ export class FacebookMessagingAPIClient {
   }
 
     /**
-     * Sends an Recurring Notification Opt In Request: https://developers.facebook.com/docs/messenger-platform/send-messages/recurring-notifications/
+     * Sends an Recurring Notification Opt In Request:
+     * https://developers.facebook.com/docs/messenger-platform/send-messages/recurring-notifications/
      * Optional cb, otherwise returns promise
      * @param {string} id
      * @param {IMessageTemplate} templatePayload
